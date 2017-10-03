@@ -1,0 +1,343 @@
+﻿
+@{
+    ViewBag.Title = "Coupons";
+}
+@section css{
+
+    <style>
+        .k-grid tbody tr {
+            height: 40px;
+        }
+
+        .k-grid td {
+            white-space: nowrap;
+        }
+
+        .k-grid tr td {
+            /*border-bottom: 0.5px solid #a8a8a8;*/
+            border-style: solid;
+            border-width: 0 0 1px 1px;
+            /*color: #a8a8a8;*/
+        }
+
+        .form-group {
+            margin-bottom: 3em;
+        }
+    </style>
+}
+@section js{
+
+
+    <script>
+        $('#girdCoupon').kendoGrid({
+            height: 550,
+            resizable: true,
+            selectable: true,
+            sortable: true,
+            //columnMenu: true,
+            scrollable: true,
+            editable: true,
+            dataSource: {
+                transport: {
+                    read: "/Admin/GetListCoupon",
+
+                },
+                schema: {
+                    model: {
+                        id: "ID",
+                        fields: {
+                            CateName: { editable: false },
+                            Title: { editable: false },
+                            DateEnd: { editable: false, type: "date" }
+                        }
+                    }
+                }
+            },
+            pageable: {
+                pageSizes: true,
+                refresh: true,
+                buttonCount: 5,
+                pageSize: 100,
+                pageSizes: ['all', 100, 150, 200],
+                messages: {
+                    itemsPerPage: "dòng / trang",
+                    display: "Hiển thị {0} - {1} / {2}",
+                    empty: "Không tìm thấy dữ liệu"
+                }
+            },
+            filterable: {
+                extra: false,
+                messages: { and: "và", or: "hoặc", filter: "Lọc", clear: "Hủy lọc", info: "" },
+                operators: {
+                    string: { eq: "Bằng", neq: "Khác", startswith: "Bắt đầu từ", contains: "Chứa", doesnotcontain: "Không chứa", endswith: "Kết thúc bằng" }
+                    , number: { eq: "=", neq: "!=", gte: ">=", gt: ">", lte: "<=", lt: "<" }
+                    , date: { neq: "!=", gte: ">=", gt: ">", lte: "<=", lt: "<" }
+                }
+            },
+            columns: [
+                { title: "Thao tác", command: [{ name: "destroy", text: "Xóa" }], width: "80px" },
+                // { field: "ID", title: "Mã blog", },
+                { field: "PostName", title: "Bài đăng" },
+                { field: "Title", title: "Tiêu đề", template: '<a href="javascript:;" onclick="UpdateCoupon(#=ID#)">#=Title#</a>' },
+                { field: "Branch", title: "Ngành" },
+                { field: "TypeName", title: "Loại Coupon" },
+                { field: "Code", title: "Mã Coupon" },
+                { field: "Link", title: "Link" },
+                { field: "DateEnd", title: "Ngày kết thúc", format: "{0:dd/MM/yyyy}", type: "date", },
+
+            ],
+            remove: function (e) {
+                $.ajax({
+                    url: '/Admin/DeleteCoupon?ID=' + e.model.ID,
+                    type: 'post',
+                    success: function (data) {
+                        if (data == 1) {
+                            alert('Xóa thành công!');
+                        } else {
+                            alert('Xóa thất bại!');
+                        }
+                    },
+                    error: function () {
+                        alert("Error Delete coupons!");
+                    }
+                });
+            },
+        });
+        function UpdateCoupon(id) {
+            //  alert(id);
+
+            $('#tab2').addClass('active');
+            $('#tab-second').addClass('active');
+
+            $('#tab1').removeClass('active');
+            $('#tab-first').removeClass('active');
+            $('#IDCoupon').val(id);
+            //    $('btnSubmitPosts').data('IDPost',id);
+            $.ajax({
+                async: true,
+                url: "/Admin/GetCoupon?Id=" + id,
+                success: function (data) {
+                    console.log(data);
+                    if (data == null) {
+                        alert('error load coupon update');
+                        return;
+                    }
+                    $('#txtTitle').val(data.Title);
+                    $('#txtCate').data('kendoDropDownList').value(data.PostID);
+                    $('#txtLink').val(data.Link);
+                    $('#txtBranch').val(data.Branch);
+                    $('#Type').val(data.Type).change();
+                    $('#DateEnd').data('kendoDatePicker').value(data.DateEnd);
+                    $('#txtCode').val(data.Code);
+                    $('#txtNote').val(data.Note);
+                    $('#txtPercent').val(data.SellOff);
+                },
+                error: function () {
+                    alert('error load coupon update');
+                }
+            })
+        }
+        $('#btnSubmitCoupon').on('click', function () {
+            if ($('#txtTitle').val() == '') {
+                alert('Nhập tiêu đề ');
+                return;
+            }
+            
+            var IDCoupon = $('#IDCoupon').val();
+            var Title = $('#txtTitle').val();
+            var PostID = $('#txtCate').data('kendoDropDownList').value();
+            var Link = $('#txtLink').val();
+            var Branch = $('#txtBranch').val();
+            var Type = $('#Type').val();
+            var tempDate = new Date($('#DateEnd').data('kendoDatePicker').value());
+            var month = tempDate.getMonth() + 1;
+            var DateEnd = tempDate.getDate() + "/" + month + "/" + tempDate.getFullYear();
+            var Code = $('#txtCode').val();
+            var Note = $('#txtNote').val();
+            var Percent = $('#txtPercent').val();
+            $.ajax({
+                url: '/Admin/PUpdateCoupon',//?id='+id+'&title='+title+'&slug='+slug+'&cate='+cate+'&tag='+tag+'&content='+content,
+                type: 'post',
+                async: true,
+                data: {
+                    IDCoupon: IDCoupon, Title: Title, PostID: PostID, Link: Link, Branch: Branch,
+                    Type: Type, DateEnd: DateEnd, Code: Code, Note: Note, Percent: Percent
+                },
+                success: function (data) {
+                    //console.log(data);
+                    if (data == 1) {
+                        alert('Cập nhật thành công');       
+                        $('#girdCoupon').data('kendoGrid').dataSource.read();
+                        $('#girdCoupon').data('kendoGrid').refresh();
+                    } else {
+                        alert("Cập nhật thất bại");
+                    }
+                },
+                error: function () {
+                    alert('error call update coupon');
+                }
+
+            })
+        });
+
+        $('#DateEnd').kendoDatePicker({
+            format: "dd/MM/yyyy",
+            value: new Date(),
+
+        });
+        $('#txtCate').kendoDropDownList({
+            dataSource: {
+                transport: {
+                    cache: false,
+                    read: "/Admin/GetListPostsCombobox"
+                },
+                //group: { field: "GroupName" }
+            },
+            height: 350,
+            optionLabel: "Chọn bài đăng",
+            dataTextField: "Title",
+            dataValueField: "ID",
+            //  template: '# if (GroupName == null) { #<span style="color:red">#:Name#</span>#} else {##:Name##} # '
+
+        });
+    </script>
+}
+<h2>Quản lý coupons</h2>
+<input type="hidden" id="IDCoupon" />
+<div class="page-content-wrap" style="font-size:14px">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default tabs">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="active" id="tab1"><a href="#tab-first" role="tab" data-toggle="tab">Danh sách</a></li>
+                    <li id="tab2"><a href="#tab-second" role="tab" data-toggle="tab">Cập nhật</a></li>
+                </ul>
+                <div class="panel-body tab-content">
+                    <div class="tab-pane active" id="tab-first">
+                        <div id="girdCoupon">
+
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab-second" style="height:500px">
+                        <div class="panel panel-default">
+
+                            <div class="panel-body" style="text-align:-webkit-center">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Tiêu đề </label>
+                                            <div class="col-md-9">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                                    <input type="text" class="form-control" name="Title" id="txtTitle" required/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Bài đăng</label>
+                                            <div class="col-md-9">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><span class="fa fa-list"></span></span>
+                                                    <input type="text" class="form-control" name="Cate" id="txtCate" style="font-size:14px" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Ngành</label>
+                                            <div class="col-md-9">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><span class="fa fa-list"></span></span>
+                                                    <input type="text" class="form-control" name="Branch" id="txtBranch" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Loại Coupon</label>
+                                            <div class="col-md-9">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><span class="fa fa-usd"></span></span>
+                                                    <select class="form-control select" name="Type" id="Type">
+                                                        <option value="1">Mã giảm giá</option>
+                                                        <option value="2">Link affiliate</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Ngày hết hạn</label>
+                                            <div class="col-md-9">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                                                    <input type="text" style="font-size:14px" class="form-control" id="DateEnd" name="DateEnd">
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Link</label>
+                                            <div class="col-md-9">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><span class="fa fa-link"></span></span>
+                                                    <input type="text" class="form-control" id="txtLink" name="Link">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Mã giảm giá</label>
+                                            <div class="col-md-9">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><span class="fa fa-tags"></span></span>
+                                                    <input type="text" class="form-control" id="txtCode" name="Code">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Giảm</label>
+                                            <div class="col-md-9">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-star-o"></i></span>
+                                                    <input type="number" class="form-control" id="txtPercent" name="Percent" min="1" max="100" value="50">
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Lưu ý</label>
+                                            <div class="col-md-9">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><span class="fa fa-tags"></span></span>
+                                                    <input type="text" class="form-control" id="txtNote" name="Note">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-footer " style="text-align:center">
+                                <button class="btn btn-primary" id="btnSubmitCoupon" data-IDPost="">Hoàn tất</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

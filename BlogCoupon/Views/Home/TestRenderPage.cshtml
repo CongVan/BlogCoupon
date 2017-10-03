@@ -1,0 +1,560 @@
+﻿
+@{
+    ViewBag.Title = "TestRenderPage";
+    Layout = "~/Views/Shared/HomeLayout.cshtml";
+}
+
+@section css{
+    <style>
+        .box {
+            width: 200px;
+            height: 300px;
+            position: relative;
+            border: 1px solid #BBB;
+            background: #EEE;
+        }
+
+        .ribbon {
+            position: absolute;
+            right: -5px;
+            top: -5px;
+            z-index: 1;
+            overflow: hidden;
+            width: 75px;
+            height: 75px;
+            text-align: right;
+        }
+
+            .ribbon span {
+                font-size: 15px;
+                font-weight: bold;
+                color: #FFF;
+                text-transform: uppercase;
+                text-align: center;
+                /*line-height: 20px;*/
+                transform: rotate(45deg);
+                -webkit-transform: rotate(45deg);
+                width: 100px;
+                display: block;
+                background-image: linear-gradient(to top, #f77062 0%, #fe5196 100%); /*background: #ff4444;*/
+                /*background: linear-gradient(#F70505 0%, #8F0808 100%);*/
+                box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
+                position: absolute;
+                top: 19px;
+                right: -21px;
+            }
+
+                .ribbon span::before {
+                    content: "";
+                    position: absolute;
+                    left: 0px;
+                    top: 100%;
+                    z-index: -1;
+                    border-left: 3px solid #8F0808;
+                    border-right: 3px solid transparent;
+                    border-bottom: 3px solid transparent;
+                    border-top: 3px solid #8F0808;
+                }
+
+                .ribbon span::after {
+                    content: "";
+                    position: absolute;
+                    right: 0px;
+                    top: 100%;
+                    z-index: -1;
+                    border-left: 3px solid transparent;
+                    border-right: 3px solid #8F0808;
+                    border-bottom: 3px solid transparent;
+                    border-top: 3px solid #8F0808;
+                }
+    </style>
+}
+
+
+<!--Section: Blog v.4-->
+<section class=" section-blog-fw">
+    <!--Grid row-->
+    <div class="row">
+
+        <ul class="fixed-action-btn" style="right:auto;left:20px;" id="UtiPost">
+            <li data-toggle="tooltip" data-placement="right" title="Bình luận bài viết"><a class="btn-floating green waves-effect waves-light"><i class="fa fa-comments"></i></a></li>
+            <li data-toggle="tooltip" data-placement="right" title="Góp ý cho tác giả"><a class="btn-floating yellow darken-1 waves-effect waves-light"><i class="fa fa-pencil"></i></a></li>
+            <li data-toggle="tooltip" data-placement="right" title="Chia sẻ qua facebook"><a class="btn-floating btn-fb  waves-effect waves-light"><i class="fa fa-facebook"></i></a></li>
+            <li data-toggle="tooltip" data-placement="right" title="Chia sẻ qua g+"><a class="btn-floating btn-gplus  waves-effect waves-light"><i class="fa fa-google-plus"></i></a></li>
+        </ul>
+        <div class="col-md-12">
+            <!--Featured image-->
+            <div class="card card-cascade wider reverse">
+                <div class="view overlay hm-white-slight">
+                    <img src="https://mdbootstrap.com/img/Photos/Slides/img%20(116).jpg" alt="Wide sample post image">
+                    <a>
+                        <div class=""></div>
+                    </a>
+                </div>
+
+                <!--Post data-->
+                <div class="card-body text-center">
+                    <h2><a>[REVIEW]- REGALCOIN LÀ GÌ, HIỆN TẠI CÓ NÊN ĐẦU TƯ HAY KHÔNG?</a></h2>
+                    <p><a class="text-danger"><i class="fa fa-pencil"></i> Cao Hiếu </a>,&nbsp; <small>26/08/2016</small> </p>
+
+                    <!--Social shares-->
+                    <div class="social-counters ">
+
+                        <!--Facebook-->
+                        <a class="btn btn-fb btn-md">
+                            <i class="fa fa-facebook left "></i>
+                            @*<span class="hidden-md-down ">Facebook</span>*@
+                        </a>
+                        <span class="counter ">46</span>
+
+                        <!--Twitter-->
+                        <a class="btn btn-tw btn-md">
+                            <i class="fa fa-twitter left "></i>
+                            @*<span class="hidden-md-down ">Twitter</span>*@
+                        </a>
+                        <span class="counter ">22</span>
+
+                        <!--Google+-->
+                        <a class="btn btn-gplus btn-md">
+                            <i class="fa fa-google-plus left "></i>
+                            @*<span class="hidden-md-down ">Google+</span>*@
+                        </a>
+                        <span class="counter ">31</span>
+
+                        <!--Comments-->
+                        <a class="btn btn-default btn-md">
+                            <i class="fa fa-comments-o left "></i>
+                            @*<span class="hidden-md-down ">Comments</span>*@
+                        </a>
+                        <span class="counter ">18</span>
+
+                    </div>
+                    <!--Social shares-->
+
+                </div>
+                <!--Post data-->
+            </div>
+
+            <!--Excerpt-->
+            <div class="excerpt mt-3 mx-1 " style="color:black!important">
+                <p>
+                    Regal Coin, Huy động vốn tại Regalcoin.co và có kênh thông là regalcoin.info, là một cryptocurrency mới hiện đang  , Mọi thứ bạn cần biết về Regal Coin chúng tôi sẽ  đánh giá trong bài viết này.
+
+                    1- RegalCoin là gì?
+
+                    Regal Coin là một mật mã được giới thiệu vào Internet vào tháng 8 năm 2017. ICO của thẻ này bắt đầu vào ngày 22 tháng 8 và dự kiến ​​kéo dài đến ngày 22 tháng 9.
+
+                    Regal Coin không được kết nối với bất kỳ nền tảng, công ty, sản phẩm hoặc dịch vụ nào nó có tổng cộng 27 triệu Regal Coins (REC).
+
+                    2- RegalCoin làm việc như thế nào?
+
+                    Regal Coin sử dụng thuật toán Dashcoin X11 (cùng một thuật toán được sử dụng bởi DASH).Điều duy nhất chúng ta thực sự biết về Regal Coin là chương trình liên kết thu nhập của công ty, chúng ta sẽ nói về bên dưới.
+
+                    Regal Coin có một chương trình tiếp thị ba cấp. Nếu bạn giới thiệu ai đó để mua Regal Coins, và sau đó họ giới thiệu ai đó, và người đó đề cập tới ai đó thì bạn sẽ kiếm được tiền từ cả ba cấp độ:
+
+                    Cấp 1: 7% thu nhập
+
+                    Cấp 2: 2% thu nhập
+
+                    Cấp 3: 1% thu nhập
+
+                    Cũng có một số loại hệ thống thu nhập nhị phân, nơi bạn kiếm được hoa hồng từ cả hai mặt của kim tự tháp của bạn. Bạn có thể kiếm được tiền thưởng mạng lên đến $ 21,000 USD mỗi tuần. Trang web của Regal Coin đề cập tới khả năng kiếm được 100.000 đô la từ dòng bán hàng “Right” và “Sales Left”.
+
+                    Có thể nói Regalcoin fake 98% từ hình thức đến cách vận hành của Bitconnect.Vì vậy nó đã đánh vào tâm lý nếu ai đó đã bỏ lỡ cơ hội đầu tư vào thời điểm đầu của Bitconnect thì hiện tại Regalcoin giành cho bạn.Tuy nhiên Regalcoin còn nhiều vấn đề để phân tích tiếp theo.
+
+                    3- Ai Đằng sau RegalCoin?
+
+                    Regal Coin không liệt kê địa chỉ của nó, cũng không liệt kê bất kỳ thông tin nào về đội ngũ quản lý. Trang web có một “whitepaper”, nhưng đó là một trang trống với một vài câu hỏi thường gặp được hiển thị.
+
+                    Công ty tuyên bố có trụ sở tại Hồng Kông. Bạn có thể liên hệ với công ty bằng email tại support@regalcoin.co.
+
+                    Ngoài thông tin rất cơ bản này, chúng tôi không có thông tin về người đứng đằng sau Regal Coin Hoặc có nhưng không lấy gì chắc chắn vì chúng tôi chỉ  tìm hiểu và trao đổi về hệ thống regalcoin thông qua internet.
+
+                    4- Kết luận RegalCoin
+
+                    Trong thế giới internet, khi ai đó không cho bạn biết bất cứ thông tin nào về họ thì đó là cần gắn một lá cờ đỏ. Regal Coin dường như có một trang web hợp pháp, nhưng không có báo cáo trắng, không có thông tin về nhóm phát triển và không có dấu hiệu cho thấy có bất kỳ sản phẩm hoặc dịch vụ của Regal Coin.
+
+                    Trên thực tế, chúng tôi thậm chí không có bằng chứng cho thấy Regal Coin dựa trên blockchain – cho tất cả những gì chúng tôi biết, đồng tiền chỉ là một mã thông báo kỹ thuật số được trình bày trên một máy chủ web tập trung ở đâu đó.
+
+                    Chúng tôi gắn lá cờ đỏ cho Regal Coin là do nó đang được quảng cáo như là một cơ hội đầu tư, nơi bạn có thể kiếm được lợi nhuận to lớn. Đồng xu tuyên bố sẽ tăng lên 10 đô la trong tháng Chín và sau đó là 50 đô la trước cuối năm – và bạn có thể mua vào với giá chưa tới một đô la ngày hôm nay. Khi một cryptocurrency khởi động với ROIs cụ thể trong tâm trí, đó không phải là một điều tốt.
+
+                    Cuối cùng, Regal Coin dường như là một đồng tiền chất lượng thấp  không có mục đích thực sự, ngoại trừ người sáng lập ra nó đã sáng tạo nhiều thông tin để nó phong phú.
+
+                    Vì vậy hiện tại chúng tôi đánh giá nó rất thấp cho đến  khi chúng ta thấy một báo cáo trắng, các sản phẩm có liên quan tới đồng xu,blockchain hoặc bất kỳ lý do nào để gán giá trị cho đồng xu và hiện tại nó dường như là một đồng tiền số vô dụng.
+
+                    Chúng tôi đã đăng ký tài khoản tại đây để review cho các bạn bài viết này và sẽ cân nhắc đầu tư vào Regalcoin khi nó đáp ứng những tiêu chuẩn cơ bản của chúng tôi (Hiện tại chúng tôi đứng ngoài) và cũng khuyên các bạn không nên vội vàng để giảm rủi ro cần thiết trong đầu tư online.
+
+                    Tuy nhiên bây giờ bạn có thể đăng ký một tài khoản free để xem Regalcoin nó có gì trong đó  trước khi đầu tư vào nó.
+                </p>
+
+            </div>
+
+
+
+
+
+        </div>
+
+        <!--Grid row-->
+
+    </div>
+    <hr class="mb-2 mt-4">
+    <div class="row">
+        <div class="text-center col-md-12">
+            <h4 class=" text-primary  border border-primary border-left-0 border-top-0 border-right-0 pb-1"> <i class="fa fa-tags"></i>Coupon - Voucher - Khuyến mãi </h4>
+        </div>
+
+        <div class="col-md-12">
+
+            <div class="card card-body mx-2 my-2">
+                <div class="row ">
+                    @*<div class="ribbon-wrapper" id="">
+                            <div class="ribbon">Mới</div>
+                        </div>*@
+                    
+                        <div class="ribbon"><span class="">Mới</span></div>
+                  
+                    <div class="col-md-2 " id="percentlg">
+                        <button class="btn btn-floating btn-outline-success btn-large bg-white"><h3><strong>50%</strong></h3> </button>
+                    </div>
+                    <div class="col-md-7 col-xs-12 col-sm-12 pl-2 ">
+                        <h5 class="card-title">TỐT - Coupon giảm thêm 9% từ các thương hiệu lớn dành cho khách hàng mới</h5>
+                        <h6 class="indigo-text"><strong><i class="fa fa-clock-o"></i> Hạn dùng: &nbsp;<span class="black-text">30/09/2016</span> </strong></h6>
+                        <h6 class="indigo-text"><strong><i class="fa fa-shopping-bag"></i> Sản phẩm: &nbsp;<span class="black-text">Đa dạng</span></strong></h6>
+                        <h6 class="indigo-text"><strong><i class="fa fa-sticky-note-o"></i> Lưu ý: &nbsp;<span class="black-text">Là một mã giảm giá cực tốt của Lazada, với nhiều thương hiệu lớn. Mức giảm tối đa lên đến 200K</span></strong></h6>
+                    </div>
+                    <div class="col-md-3 col-xs-12 col-sm-12">
+                        @*<a class="btn-floating btn-action"><i class="fa fa-chevron-right"></i></a>*@
+                        <button id="percentsm" class=" btn btn-floating btn-outline-success btn-large bg-white"><h3><strong>50%</strong></h3></button>
+                        <button class="btn btn-outline-primary">Xem</button>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="card card-body mx-2 my-2">
+                <div class="row ">
+                    <div class="col-md-2 " id="percentlg">
+                        <button class="btn btn-floating btn-outline-success btn-large bg-white"><h3><strong>50%</strong></h3> </button>
+                    </div>
+                    <div class="col-md-7 col-xs-12 col-sm-12 pl-5 ">
+                        <h4 class="card-title">Panel title</h4>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    </div>
+                    <div class="col-md-3 col-xs-12 col-sm-12">
+                        <button id="percentsm" class=" btn btn-floating btn-outline-success btn-large bg-white"><h3><strong>50%</strong></h3></button>
+                        <button class="btn btn-outline-primary">Xem</button>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="card card-body mx-2 my-2">
+                <div class="row  ">
+                    <div class="col-md-2 " id="percentlg">
+                        <button class="btn btn-floating btn-outline-success btn-large bg-white"><h3><strong>50%</strong></h3> </button>
+                    </div>
+                    <div class="col-md-7 col-xs-12 col-sm-12 pl-5 ">
+                        <h4 class="card-title">Panel title</h4>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    </div>
+                    <div class="col-md-3 col-xs-12 col-sm-12">
+                        <button id="percentsm" class=" btn btn-floating btn-outline-success btn-large bg-white"><h3><strong>50%</strong></h3></button>
+                        <button class="btn btn-outline-primary">Xem</button>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="card card-body mx-2 my-2">
+                <div class="row ">
+                    <div class="col-md-2 " id="percentlg">
+                        <button class="btn btn-floating btn-outline-success btn-large bg-white"><h3><strong>50%</strong></h3> </button>
+                    </div>
+                    <div class="col-md-7 col-xs-12 col-sm-12 pl-5 ">
+                        <h4 class="card-title">Panel title</h4>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    </div>
+                    <div class="col-md-3 col-xs-12 col-sm-12">
+                        <button id="percentsm" class=" btn btn-floating btn-outline-success btn-large bg-white"><h3><strong>50%</strong></h3></button>
+                        <button class="btn btn-outline-primary d-flex">Xem</button>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+    </div>
+    <hr class="mb-5 mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs nav-justified indigo" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#panel5" role="tab"><i class="fa fa-facebook"></i> &nbsp; Bình luận qua Facebook</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#panel6" role="tab"><i class="fa fa-commenting-o"></i>&nbsp; Bình luận qua Email</a>
+                </li>
+                @*<li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#panel7" role="tab"><i class="fa fa-envelope"></i> Mail</a>
+                    </li>*@
+            </ul>
+            <!-- Tab panels -->
+            <div class="tab-content">
+                <!--Panel 1-->
+                <div class="tab-pane fade in show active" id="panel5" role="tabpanel">
+                    <div class="fb-comments" data-href="http://localhost:49775" data-colorscheme="light" data-numposts="5" data-width="auto"></div>
+                </div>
+                <!--/.Panel 1-->
+                <!--Panel 2-->
+                <div class="tab-pane fade" id="panel6" role="tabpanel">
+                    <!--Section: Social newsfeed v.1-->
+                    <section class="pt-5 pb-3">
+
+                        <!--Grid row-->
+                        <div class="row">
+
+                            <!--Grid column-->
+                            <div class="col-lg-12">
+
+                                <!--Newsfeed-->
+                                <div class="mdb-feed">
+
+                                    <!--First news-->
+                                    <div class="news">
+
+                                        <!--Label-->
+                                        <div class="label">
+                                            <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-1-mini.jpg" class="rounded-circle z-depth-1-half">
+                                        </div>
+
+                                        <!--Excert-->
+                                        <div class="excerpt">
+
+                                            <!--Brief-->
+                                            <div class="brief">
+                                                <a class="name">John Doe</a> added you as a friend<div class="date">1 hour ago</div>
+                                            </div>
+
+                                            <!--Feed footer-->
+                                            <div class="feed-footer">
+                                                <a class="like"><i class="fa fa-heart"></i><span>5 likes</span></a>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <!--First news-->
+                                    <!--Second news-->
+                                    <div class="news">
+
+                                        <!--Label-->
+                                        <div class="label">
+                                            <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(17)-mini.jpg" class="rounded-circle z-depth-1-half">
+                                        </div>
+
+                                        <!--Excert-->
+                                        <div class="excerpt">
+
+                                            <!--Brief-->
+                                            <div class="brief">
+                                                <a class="name">Anna Smith</a> added<a> 2 new illustrations</a><div class="date">4 hours ago</div>
+                                            </div>
+
+                                            <!--Added images-->
+                                            <div class="added-images">
+                                                <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(73).jpg" class="z-depth-1">
+                                                <img src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(18).jpg" class="z-depth-1">
+                                            </div>
+
+                                            <!--Feed footer-->
+                                            <div class="feed-footer">
+                                                <a class="like"><i class="fa fa-heart"></i><span>18 likes</span></a>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <!--Second news-->
+                                    <!--Third news-->
+                                    <div class="news">
+
+                                        <!--Label-->
+                                        <div class="label">
+                                            <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(9)-mini.jpg" class="rounded-circle z-depth-1-half">
+                                        </div>
+
+                                        <!--Excert-->
+                                        <div class="excerpt">
+
+                                            <!--Brief-->
+                                            <div class="brief">
+                                                <a class="name">Danny Moore</a> added you as a friend<div class="date">7 hours ago</div>
+                                            </div>
+
+                                            <!--Feed footer-->
+                                            <div class="feed-footer">
+                                                <a class="like"><i class="fa fa-heart"></i><span>11 likes</span></a>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <!--Third news-->
+                                    <!--Fourth news-->
+                                    <div class="news">
+
+                                        <!--Label-->
+                                        <div class="label">
+                                            <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(18)-mini.jpg" class="rounded-circle z-depth-1-half">
+                                        </div>
+
+                                        <!--Excert-->
+                                        <div class="excerpt">
+
+                                            <!--Brief-->
+                                            <div class="brief">
+                                                <a class="name">Lili Rose</a> posted on his page<div class="date">2 days ago</div>
+                                            </div>
+
+                                            <!--Added text-->
+                                            <div class="added-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero inventore, iste quas libero eius? Vitae sint neque animi alias sunt dolor, accusantium ducimus, non placeat voluptate.</div>
+
+                                            <!--Feed footer-->
+                                            <div class="feed-footer">
+                                                <a class="like"><i class="fa fa-heart"></i><span>7 likes</span></a>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <!--Fourth news-->
+                                    <!--Fifth news-->
+                                    <div class="news">
+
+                                        <!--Label-->
+                                        <div class="label">
+                                            <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20)-mini.jpg" class="rounded-circle z-depth-1-half">
+                                        </div>
+
+                                        <!--Excert-->
+                                        <div class="excerpt">
+
+                                            <!--Brief-->
+                                            <div class="brief">
+                                                <a class="name">Kate Harrison</a> added<a> 2 new photos</a> of you<div class="date">3 days ago</div>
+                                            </div>
+
+                                            <!--Added images-->
+                                            <div class="added-images">
+                                                <img src="https://mdbootstrap.com/img/Photos/Horizontal/People/4-col/img%20(121).jpg" class="z-depth-1">
+                                                <img src="https://mdbootstrap.com/img/Photos/Horizontal/People/4-col/img%20(26).jpg" class="z-depth-1">
+                                            </div>
+
+                                            <!--Feed footer-->
+                                            <div class="feed-footer">
+                                                <a class="like"><i class="fa fa-heart"></i><span>53 likes</span></a>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <!--Fifth news-->
+
+                                </div>
+                                <!--Newsfeed-->
+
+                            </div>
+                            <!--Grid column-->
+
+                        </div>
+                        <!--Grid row-->
+
+                    </section>
+                    <!--Section: Social newsfeed v.1-->
+                    <hr class="my-3" />
+                    <!-- Form login -->
+                    <form>
+                        <p class="h5 text-center mb-4">Sign in</p>
+
+                        <div class="md-form">
+                            <i class="fa fa-envelope prefix grey-text"></i>
+                            <input type="text" id="defaultForm-email" class="form-control">
+                            <label for="defaultForm-email">Your email</label>
+                        </div>
+
+                        <div class="md-form">
+                            <i class="fa fa-lock prefix grey-text"></i>
+                            <input type="password" id="defaultForm-pass" class="form-control">
+                            <label for="defaultForm-pass">Your password</label>
+                        </div>
+
+                        <div class="text-center">
+                            <button class="btn btn-default">Login</button>
+                        </div>
+                    </form>
+                    <!-- Form login -->
+                </div>
+                <!--/.Panel 2-->
+                <!--Panel 3-->
+                @*<div class="tab-pane fade" id="panel7" role="tabpanel">
+                        <br>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione porro voluptate odit minima.</p>
+                    </div>*@
+                <!--/.Panel 3-->
+            </div>
+
+
+
+        </div>
+    </div>
+</section>
+<!--Section: Blog v.4-->
+
+@section js{
+    <script>
+        $(document).ready(function () {
+            $(".sticky").sticky({
+                topSpacing: 90
+                , zIndex: 2
+                , stopper: "#fotterStop"
+            });
+            //$('#UnitiPost').toggleClass('active');
+        });
+    </script>
+    <script>
+        //comment facebook
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '340811506338045',
+                xfbml: true,
+                version: 'v2.10'
+            });
+            FB.AppEvents.logPageView();
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) { return; }
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.10&appId=340811506338045";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+    //    (function (d, s, id) {
+    //    var js, fjs = d.getElementsByTagName(s)[0];
+    //    if (d.getElementById(id)) return;
+    //    js = d.createElement(s); js.id = id;
+    //    js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.10&appId=340811506338045";
+    //    fjs.parentNode.insertBefore(js, fjs);
+    //}(document, 'script', 'facebook-jssdk'));
+
+    </script>
+}

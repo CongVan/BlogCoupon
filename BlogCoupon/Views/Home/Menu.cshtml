@@ -1,0 +1,62 @@
+﻿@using BlogCoupon.Models
+@model List<Category>
+
+@for (int i = 0; i < Model.Count; i++)
+{
+
+    if (Model[i].HasChild == false || Model[i].HasChild == null)
+    {
+        if (i == 0)
+        {
+            <li class="nav-item active">
+                <a class="nav-link" href="@Url.RouteUrl("CateBySlug",new {slug=Model[i].Slug })">@Model[i].Name</a>
+            </li>
+            @*<li class=""><a href="@Url.RouteUrl("CateBySlug",new {slug=Model[i].Slug })">@Model[i].Name</a></li>*@
+        }
+        else
+        {
+            @*<li><a href="@Url.RouteUrl("CateBySlug",new {slug=Model[i].Slug })">@Model[i].Name</a></li>*@
+            <li class="nav-item ">
+                <a class="nav-link" href="@Url.RouteUrl("CateBySlug",new {slug=Model[i].Slug })">@Model[i].Name</a>
+            </li>
+        }
+    }
+    else
+    {
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="@Url.RouteUrl("CateBySlug",new {slug=Model[i].Slug })" id="navbarDropdownMenuLink" data-toggle="dropdown" data-hover="dropdown"
+               aria-haspopup="true" aria-expanded="true">
+                @Model[i].Name 
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" id="menuhover1">
+                @Html.Action("MenuChild", "Home", new { id = Model[i].ID })
+            </ul>
+        </li>
+        @*if (i == 0)
+        {
+            <li class="dropdown">
+                <a href="@Url.RouteUrl("CateBySlug",new {slug=Model[i].Slug })"  data-toggle="dropdown" data-hover="dropdown">@Model[i].Name <i class="fa fa-angle-down"></i></a>
+
+                <div class="dropdown-menu default-dropdown">
+                    <ul>
+                        @Html.Action("MenuChild", "Home", new { id = Model[i].ID })
+                    </ul>
+                </div>
+
+            </li>
+        }
+        else
+        {
+            <li class="dropdown">
+                <a href="@Url.RouteUrl("CateBySlug",new {slug=Model[i].Slug })"   data-toggle="dropdown" data-hover="dropdown">@Model[i].Name <i class="fa fa-angle-down"></i></a>
+                
+                <div class="dropdown-menu default-dropdown">
+                    <ul>
+                        @Html.Action("MenuChild", "Home", new { id = Model[i].ID })
+                    </ul>
+                </div>
+
+            </li>
+        }*@
+    }
+}

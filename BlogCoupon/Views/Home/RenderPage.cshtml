@@ -1,0 +1,692 @@
+﻿@using BlogCoupon.Models
+@model Post
+@{
+    ViewBag.Title = Model.Title;
+    Layout = "~/Views/Shared/HomeLayout.cshtml";
+}
+
+@section css{
+    <style>
+        .box {
+            width: 200px;
+            height: 300px;
+            position: relative;
+            border: 1px solid #BBB;
+            background: #EEE;
+        }
+
+        .ribbon {
+            position: absolute;
+            right: -5px;
+            top: -5px;
+            z-index: 1;
+            overflow: hidden;
+            width: 75px;
+            height: 75px;
+            text-align: right;
+        }
+
+            .ribbon span {
+                font-size: 15px;
+                font-weight: bold;
+                color: #FFF;
+                text-transform: uppercase;
+                text-align: center;
+                /*line-height: 20px;*/
+                transform: rotate(45deg);
+                -webkit-transform: rotate(45deg);
+                width: 100px;
+                display: block;
+                background-image: linear-gradient(to top, #f77062 0%, #fe5196 100%); /*background: #ff4444;*/
+                /*background: linear-gradient(#F70505 0%, #8F0808 100%);*/
+                box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
+                position: absolute;
+                top: 19px;
+                right: -21px;
+            }
+
+                .ribbon span::before {
+                    content: "";
+                    position: absolute;
+                    left: 0px;
+                    top: 100%;
+                    z-index: -1;
+                    border-left: 3px solid #8F0808;
+                    border-right: 3px solid transparent;
+                    border-bottom: 3px solid transparent;
+                    border-top: 3px solid #8F0808;
+                }
+
+                .ribbon span::after {
+                    content: "";
+                    position: absolute;
+                    right: 0px;
+                    top: 100%;
+                    z-index: -1;
+                    border-left: 3px solid transparent;
+                    border-right: 3px solid #8F0808;
+                    border-bottom: 3px solid transparent;
+                    border-top: 3px solid #8F0808;
+                }
+    </style>
+}
+
+@if (ViewBag.NotFound == null)
+{
+<!--Section: Blog v.4-->
+<section class=" section-blog-fw">
+        <!--Grid row-->
+        <div class="row">
+            
+                <ul class="fixed-action-btn" style="right:auto;left:20px;" id="UtiPost">
+                    <li class="Utility" id="btnComment" data-toggle="tooltip" data-placement="right" title="Bình luận bài viết"><a class="btn-floating green waves-effect waves-light"><i class="fa fa-comments"></i></a></li>
+                    <li class="Utility" data-toggle="tooltip" data-placement="right" title="Góp ý cho tác giả">
+                        <a class="btn-floating yellow darken-1 waves-effect waves-light"><i class="fa fa-pencil"></i></a>
+                    </li>
+                    <li class="Utility" data-toggle="tooltip" data-placement="right" title="Chia sẻ qua facebook">
+                        <a href="#"
+                           onClick="MyWindow=window.open('https://www.facebook.com/sharer/sharer.php?u=https://developers.facebook.com/docs/plugins/','Chia sẻ lên Facebook','width=100,height=300'); return false;"
+                           class=" btn-floating btn-fb  waves-effect waves-light"><i class="fa fa-facebook"></i></a>
+                    </li>
+                    <li class="Utility" data-toggle="tooltip" data-placement="right" title="Chia sẻ qua g+">
+                        <a href="#" onclick="window.open('https://plus.google.com/share?url=https://caohieu.com/','Chia sẻ lên G+', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=400');return false;"
+                           class="  btn-floating btn-gplus  waves-effect waves-light"><i class="fa fa-google-plus"></i></a>
+                    </li>
+                    <li id="CollapseUtility" data-toggle="tooltip" data-placement="right" title="Thu gọn">
+                        <a class="btn-floating btn-default  waves-effect waves-light"><i class="fa fa-angle-left"></i></a>
+                    </li>
+                </ul>
+
+           
+            
+            <div class="col-md-12">
+                <!--Featured image-->
+                <div class="card card-cascade wider reverse">
+                    <div class="view overlay hm-white-slight">
+                        <img src="https://mdbootstrap.com/img/Photos/Slides/img%20(116).jpg" alt="Wide sample post image">
+                        <a>
+                            <div class=""></div>
+                        </a>
+                    </div>
+
+                    <!--Post data-->
+                    <div class="card-body text-center">
+                        <h2>@Model.Title</h2>
+                        <p><a class="text-danger"><i class="fa fa-pencil"></i> Cao Hiếu </a>,&nbsp; <small>@(Model.CreateDate == null ? "" : Model.CreateDate.Value.Date.ToString("dd/MM/yyyy") )</small> </p>
+
+                        <!--Social shares-->
+                        <div class="social-counters ">
+                            @* <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Chia sẻ</a></div>*@
+                            <!--Facebook-->
+                            <a href="#"
+                               onClick="MyWindow=window.open('https://www.facebook.com/sharer/sharer.php?u=https://developers.facebook.com/docs/plugins/','Chia sẻ lên Facebook','width=100,height=300'); return false;"
+                               class="btn btn-fb btn-md" data-toggle="tooltip" data-placement="bottom" title="Chia sẻ bài viết lên Facebook">
+                                <i class="fa fa-facebook left "></i>
+                                <span class="hidden-md-down ">Facebook</span>
+                            </a>
+                            <span class="counter" id="countFace"></span>
+
+                            <!--Twitter-->
+                            <a href="#"
+                               onclick="window.open('https://twitter.com/intent/tweet?text=https://caohieu.com/','Chia sẻ lên Twitter', 'height=600,width=600');return false;"
+                               class="btn btn-tw btn-md" data-toggle="tooltip" data-placement="bottom" title="Chia sẻ bài viết lên Twitter">
+                                <i class="fa fa-twitter left "></i>
+                                <span class="hidden-md-down ">Twitter</span>
+                            </a>
+                            <span class="counter "></span>
+
+                            <!--Google+-->
+                            <a href="#" onclick="window.open('https://plus.google.com/share?url=https://caohieu.com/','Chia sẻ lên G+', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=400');return false;"
+                               class="btn btn-gplus btn-md" data-toggle="tooltip" data-placement="bottom" title="Chia sẻ bài viết lên Google+">
+                                <i class="fa fa-google-plus left "></i>
+                                <span class="hidden-md-down ">Google+</span>
+                            </a>
+                            <span class="counter " id="countGP"></span>
+                            @* <div class="g-plus" data-action="share" data-annotation="bubble" data-height="24" data-href="https://developers.google.com/+/web/share/"></div>*@
+                            <!--Comments-->
+
+                            <a class="btn btn-ins btn-md" href="https://www.instagram.com/lehieubt3/" target="_blank"
+                               data-toggle="tooltip" data-placement="bottom" title="Chia sẻ bài viết lên Instagram">
+                                <i class="fa fa-instagram"></i>
+                                <span class="hidden-md-down ">Instagram</span>
+                            </a>
+                            <span class="counter " id="countIns"></span>
+
+                        </div>
+                        <!--Social shares-->
+
+                    </div>
+                    <!--Post data-->
+                </div>
+
+                <!--Excerpt-->
+                <div class="excerpt mt-3 mx-1 black-text " style="color:black!important;font-weight:bolder!important">
+                    @Html.Raw(Model.Content)
+                </div>
+
+            </div>
+
+            <!--Grid row-->
+
+        </div>
+        @if (ViewBag.Coupons.Count > 0)
+        {
+            <hr class="mb-2 mt-4">
+            <div class="row">
+                <div class="text-center col-md-12">
+                    <h4 class=" text-primary  border border-primary border-left-0 border-top-0 border-right-0 pb-1"> <i class="fa fa-tags"></i>Coupon - Voucher - Khuyến mãi </h4>
+                </div>
+
+                <div class="col-md-12">
+                    @foreach (Coupon c in ViewBag.Coupons)
+                    {
+                        <div class="card card-body mx-2 my-2">
+                            <div class="row ">
+                                <div class="ribbon"><span class="">Mới</span></div>
+
+                                <div class="col-md-2 " id="percentlg">
+                                    <button class="btn btn-floating btn-outline-amber bg-white btn-large">
+                                        <h5 class="py-1"><strong>@c.SellOff%</strong></h5>
+                                    </button>
+                                </div>
+                                <div class="col-md-7 col-xs-12 col-sm-12 pl-2 ">
+                                    <h5 class="card-title">@c.Title</h5>
+                                    <h6 class="indigo-text"><strong><i class="fa fa-clock-o"></i> Hạn dùng: &nbsp;<span class="black-text">@(c.DateEnd == null ? "" : c.DateEnd.Value.Date.ToString("dd/MM/yyyy") )</span> </strong></h6>
+                                    <h6 class="indigo-text"><strong><i class="fa fa-shopping-bag"></i> Sản phẩm: &nbsp;<span class="black-text">@c.Branch</span></strong></h6>
+                                    <h6 class="indigo-text"><strong><i class="fa fa-sticky-note-o"></i> Lưu ý: &nbsp;<span class="black-text">@c.Note</span></strong></h6>
+                                </div>
+                                <div class="col-md-3 col-xs-12 col-sm-12">
+                                    @*<a class="btn-floating btn-action"><i class="fa fa-chevron-right"></i></a>*@
+                                    <button id="percentsm" class=" btn btn-floating btn-outline-success btn-large bg-white"><h3><strong>50%</strong></h3></button>
+                                    <button class="btn btn-outline-primary">Xem</button>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    }
+
+
+                </div>
+
+            </div>
+        }
+
+        <hr class="mb-5 mt-4">
+        <div class="row" id="ViewComment">
+            <div class="col-md-12">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs nav-justified indigo" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#panel5" role="tab"><i class="fa fa-facebook"></i> &nbsp; Bình luận qua Facebook</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#panel6" role="tab"><i class="fa fa-commenting-o"></i>&nbsp; Bình luận qua Email</a>
+                    </li>
+                    @*<li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#panel7" role="tab"><i class="fa fa-envelope"></i> Mail</a>
+                        </li>*@
+                </ul>
+                <!-- Tab panels -->
+                <div class="tab-content">
+                    <!--Panel 1-->
+                    <div class="tab-pane fade in show active" id="panel5" role="tabpanel">
+                        <div class="fb-comments" data-href="http://localhost:49775" data-colorscheme="light" data-numposts="5" data-width="auto"></div>
+                    </div>
+                    <!--/.Panel 1-->
+                    <!--Panel 2-->
+                    <div class="tab-pane fade" id="panel6" role="tabpanel">
+                        <!--Section: Social newsfeed v.1-->
+                        <section class="pt-2 pb-2">
+
+                            <!--Grid row-->
+                            <div class="row">
+                                <div class="col-lg-12">
+
+                                    <!--First row-->
+                                    <div class="row">
+
+                                        <!--First column-->
+                                        <div class="col-md-4">
+                                            <div class="md-form form-sm">
+                                                <i class="fa fa-user prefix"></i>
+                                                <input type="text" id="form41" class="form-control">
+                                                <label for="form41" class="">Tên của bạn</label>
+                                            </div>
+                                        </div>
+
+                                        <!--Second column-->
+                                        <div class="col-md-4">
+                                            <div class="md-form form-sm">
+                                                <i class="fa fa-envelope prefix"></i>
+                                                <input type="text" id="form51" class="form-control">
+                                                <label for="form51" class="">Email</label>
+                                            </div>
+                                        </div>
+
+                                        <!--Third column-->
+                                        <div class="col-md-4">
+                                            <div class="md-form form-sm">
+                                                <i class="fa fa-edge prefix"></i>
+                                                <input type="text" id="form61" class="form-control">
+                                                <label for="form61" class="">Website </label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <!--/.First row-->
+                                    <!--Second row-->
+                                    <div class="row">
+                                        <!--First column-->
+                                        <div class="col-md-8">
+
+                                            <div class="md-form form-sm form-inline">
+                                                <i class="fa fa-pencil prefix"></i>
+                                                <textarea type="text" id="form76" class="md-textarea" length="200"></textarea>
+                                                <label for="form76">Nội dung</label>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-4">
+                                            <button type="button" class="btn btn-outline-success btn-rounded">Bình luận</button>
+
+                                        </div>
+                                    </div>
+                                    <!--/.Second row-->
+                                    <!--Third row-->
+
+
+                                </div>
+                                <!--Grid column-->
+                                <div class="col-lg-12" style="font-weight:bolder">
+
+                                    <!--Newsfeed-->
+                                    <div class="mdb-feed">
+                                        @if (ViewBag.Comments != null)
+                                        {
+                                            foreach (Comment c in ViewBag.Comments)
+                                            {
+                                                <hr class="mt-0" />
+
+                                                <div class="news">
+
+                                                    <!--Label-->
+                                                    <div class="label">
+                                                        <img src="~/MDB-Free/img/default_user.png" class="rounded-circle">
+                                                    </div>
+
+                                                    <!--Excert-->
+                                                    <div class="excerpt mb-0">
+
+                                                        <!--Brief-->
+                                                        <div class="brief">
+                                                            <a class="name">@c.Name</a><div class="date"><i class="fa fa-clock-o"></i>&nbsp; @c.CDate.Value.ToString("dd/MM/yyyy") vào lúc @c.CDate.Value.ToString("hh:mm tt")</div>
+                                                        </div>
+
+                                                        <!--Added text-->
+                                                        <div class="added-text">@c.Content</div>
+
+                                                        <!--Feed footer-->
+                                                        @*<div class="feed-footer">
+                                                                <a class="like"><i class="fa fa-heart"></i><span>7 likes</span></a>
+                                                            </div>*@
+                                                        <a class="text-left text-primary text-sm-left RelyButton" data-id="@c.ID" data-level="1">trả lời <i class="fa fa-reply"></i></a>
+
+                                                    </div>
+                                                </div>
+                                                <div id="Rely-@c.ID" class="RelyView" style="display:none">
+                                                    <div class="col-lg-12 card mb-2 pt-3">
+
+                                                        <!--First row-->
+                                                        <div class="row">
+
+                                                            <!--First column-->
+                                                            <div class="col-md-4">
+                                                                <div class="md-form form-sm">
+                                                                    <i class="fa fa-user prefix"></i>
+                                                                    <input type="text" id="RelyName-@c.ID" class="form-control">
+                                                                    <label for="RelyName-@c.ID" class="">Tên của bạn</label>
+                                                                </div>
+                                                            </div>
+                                                            <!--Second column-->
+                                                            <div class="col-md-4">
+                                                                <div class="md-form form-sm">
+                                                                    <i class="fa fa-envelope prefix"></i>
+                                                                    <input type="text" id="RelyEmail-@c.ID" class="form-control">
+                                                                    <label for="RelyEmail-@c.ID" class="">Email</label>
+                                                                </div>
+                                                            </div>
+
+                                                            <!--Third column-->
+                                                            <div class="col-md-4">
+                                                                <div class="md-form form-sm">
+                                                                    <i class="fa fa-edge prefix"></i>
+                                                                    <input type="text" id="RelyWeb-@c.ID" class="form-control">
+                                                                    <label for="RelyWeb-@c.ID" class="">Website </label>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <!--/.First row-->
+                                                        <!--Second row-->
+                                                        <div class="row">
+                                                            <!--First column-->
+                                                            <div class="col-md-8">
+
+                                                                <div class="md-form form-sm form-inline">
+                                                                    <i class="fa fa-pencil prefix"></i>
+                                                                    <textarea type="text" id="RelyContent-@c.ID" class="md-textarea" length="200"></textarea>
+                                                                    <label for="RelyContent-@c.ID">Nội dung</label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <button type="button" data-relyid="@c.ID" data-level="1" class="SubmitRely btn btn-outline-success btn-rounded">Bình luận</button>
+                                                            </div>
+                                                        </div>
+                                                        <!--/.Second row-->
+                                                        <!--Third row-->
+
+
+                                                    </div>
+                                                </div>
+                                                <div id="RelyView-@c.ID">
+                                                    @{
+                                                        ((BlogCoupon.Controllers.HomeController)this.ViewContext.Controller).GetCommentChild(c.ID, c.PostID.Value);
+                                                        foreach (Comment commentChild in Session["CommentChild"] as List<Comment>)
+                                                        {
+                                                            <div class="news ml-3">
+
+                                                                <!--Label-->
+                                                                <div class="label">
+                                                                    <img src="~/MDB-Free/img/default_user.png" class="rounded-circle">
+
+                                                                    @*<img src="~/MDB-Free/img/default_user.png" />*@
+                                                                </div>
+
+                                                                <!--Excert-->
+                                                                <div class="excerpt mb-0">
+
+                                                                    <!--Brief-->
+                                                                    <div class="brief">
+                                                                        <a class="name">@commentChild.Name</a><div class="date"><i class="fa fa-clock-o"></i>&nbsp; @commentChild.CDate.Value.ToString("dd/MM/yyyy") vào lúc @commentChild.CDate.Value.ToString("hh:mm tt")</div>
+                                                                    </div>
+
+                                                                    <!--Added text-->
+                                                                    <div class="added-text">@commentChild.Content</div>
+                                                                    <a class="text-left text-primary text-sm-left RelyButton" data-id="@commentChild.ID" data-level="2">trả lời <i class="fa fa-reply"></i></a>
+                                                                    
+                                                                </div>
+
+                                                            </div>
+                                                            <div id="RelyChild-@commentChild.ID" class="RelyView" style="display:none">
+                                                                <div class="col-lg-12 card mb-2 pt-3">
+                                                                    <!--First row-->
+                                                                    <div class="row">
+                                                                        <!--First column-->
+                                                                        <div class="col-md-4">
+                                                                            <div class="md-form form-sm">
+                                                                                <i class="fa fa-user prefix"></i>
+                                                                                <input type="text" id="RelyChildName-@commentChild.ID" class="form-control">
+                                                                                <label for="RelyChildName-@commentChild.ID" class="">Tên của bạn</label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <!--Second column-->
+                                                                        <div class="col-md-4">
+                                                                            <div class="md-form form-sm">
+                                                                                <i class="fa fa-envelope prefix"></i>
+                                                                                <input type="text" id="RelyEmail-@c.ID" class="form-control">
+                                                                                <label for="RelyChildEmail-@commentChild.ID" class="">Email</label>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <!--Third column-->
+                                                                        <div class="col-md-4">
+                                                                            <div class="md-form form-sm">
+                                                                                <i class="fa fa-edge prefix"></i>
+                                                                                <input type="text" id="RelyChildWeb-@commentChild.ID" class="form-control">
+                                                                                <label for="RelyChildWeb-@commentChild.ID" class="">Website </label>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <!--/.First row-->
+                                                                    <!--Second row-->
+                                                                    <div class="row">
+                                                                        <!--First column-->
+                                                                        <div class="col-md-8">
+
+                                                                            <div class="md-form form-sm form-inline">
+                                                                                <i class="fa fa-pencil prefix"></i>
+                                                                                <textarea type="text" id="RelyChildContent-@commentChild.ID" class="md-textarea" length="200"></textarea>
+                                                                                <label for="RelyChildContent-@commentChild.ID">Nội dung</label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-md-4">
+                                                                            <button type="button" data-relyid="@commentChild.ID" data-level="2" class="SubmitRely btn btn-outline-success btn-rounded">Bình luận</button>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--/.Second row-->
+                                                                    <!--Third row-->
+
+
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    }
+                                                </div>
+                                                            }
+                                                        }
+
+                                    </div>
+                                    <!--Newsfeed-->
+
+                                </div>
+                                <!--Grid column-->
+
+                            </div>
+                            <!--Grid row-->
+
+                        </section>
+                        <!--Section: Social newsfeed v.1-->
+
+
+                    </div>
+                    <!--/.Panel 2-->
+                    <!--Panel 3-->
+                    @*<div class="tab-pane fade" id="panel7" role="tabpanel">
+                            <br>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta doloribus reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora, placeat ratione porro voluptate odit minima.</p>
+                        </div>*@
+                    <!--/.Panel 3-->
+                </div>
+
+
+
+            </div>
+        </div>
+    </section>
+<!--Section: Blog v.4-->
+}
+else
+{
+<h5 class="text-danger py-5 px-5">Trang không tồn tại.</h5>
+ }
+
+
+@section js{
+    <script>
+        $(document).ready(function () {
+            //$(".sticky").sticky({
+            //    topSpacing: 90
+            //    , zIndex: 2
+            //    , stopper: "#fotterStop"
+            //});
+            //$('#UnitiPost').toggleClass('active');
+
+            $.ajax({
+                url: "http://graph.facebook.com/?id=https://caohieu.com",
+                type: "get",
+
+                timeout: 30 * 1000,
+                success: function (data) {
+                    //console.log(data);
+                    //alert(data.share.share_count);
+                    $('#countFace').text(data.share.share_count);
+                }
+            });
+
+
+            $.ajax({
+                url: "https://www.instagram.com/lehieubt3/?__a=1",
+                type: "get",
+                timeout: 30 * 1000,
+                success: function (data) {
+                    console.log(data);
+                    console.log(data['user']['followed_by']['count']);
+                    //alert(data.share.share_count);
+                    $('#countIns').text(data['user']['followed_by']['count']);
+                }
+            });
+
+            //var profileid = '110700693786942896145';
+            //var apikey = 'AIzaSyAqlZ1MJSGXMSs8q5WbfvLpZTGJeHLVc2w';
+            //var url = 'https://www.googleapis.com/plus/v1/people/' + profileid + '?key=' + apikey;
+            //$.ajax({
+            //    type: "GET",
+            //    dataType: "json",
+            //    url: url,
+            //    success: function (data) {
+            //        var googlefollowcount = data.circledByCount;
+            //        $(".googlefollowercount").html(googlefollowcount);
+            //    }
+            //});
+            $.ajax({
+                url: "https://plus.google.com/ripple/details?url=https://caohieu.com",
+                type: "get",
+                //dataType: 'jsonp',
+                timeout: 30 * 1000,
+                success: function (data) {
+                    //console.log(data);
+                    //alert(data.share.share_count);
+                    //$('#countFace').text(data.share.share_count);
+                }
+            });
+        });
+        $("#btnComment").click(function () {
+            $('html, body').animate({
+                scrollTop: $("#ViewComment").offset().top
+            }, 200);
+        });
+        $(".RelyButton").on('click', function () {
+            var id = $(this).data("id");
+            var level = parseInt( $(this).data('level'));
+            if (level == 1) {
+                if ($('#Rely-' + id).css('display') == 'none') {
+                    $('.RelyView').css('display', 'none');
+                    $('#Rely-' + id).css("display", "block");
+                } else {
+                    $('.RelyView').css('display', 'none');
+                    //$('#Rely-' + id).css("display", "none");
+                }
+            }
+            if (level == 2) {
+                if ($('#RelyChild-' + id).css('display') == 'none') {
+                    $('.RelyView').css('display', 'none');
+                    $('#RelyChild-' + id).css("display", "block");
+                } else {
+                    $('.RelyView').css('display', 'none');
+                    //$('#Rely-' + id).css("display", "none");
+                }
+            }
+            
+        });
+        $('.SubmitRely').on('click', function () {
+            alert('click submit');
+            var relyid = $(this).data('relyid');
+            var level = parseInt($(this).data('level')) +1;
+
+            var name = $('#RelyName-' + relyid).val();
+            var email = $('#RelyEmail-' + relyid).val();
+            var web = $('#RelyWeb-' + relyid).val();
+            var content = $('#RelyContent-' + relyid).val();
+            var postid =@Model.ID;
+            if ($.trim(name).length == 0) {
+                alert("Vui lòng nhập họ tên của bạn!");
+                return;
+            }
+            if ($.trim(email).length == 0) {
+                alert("Vui lòng nhập Email của bạn!");
+                return;
+            }
+            if ($.trim(content).length == 0) {
+                alert("Vui lòng nhập nội dung bình luận!");
+                return;
+            }
+            $.ajax({
+                url: "/Home/ProcessComment",
+                data: { postid: postid, relyto: relyid, level: level, name: name, email: email, web: web, content: content },
+                type: "POST",
+                timeout: 30 * 1000,
+                success: function (data) {
+                    if (data == "1") {
+                    alert("Bình luận của bạn sẽ hiển thị sau khi được duyệt.");
+
+                    } else {
+                        alert(data);
+                    }
+                },
+                error: function () {
+                    alert("Có lỗi xảy ra vui lòng load lại trang.");
+                }
+            })
+        });
+        $('#CollapseUtility').on('click', function () {
+            if ($('.Utility').css('display') == 'none') {
+                $('.Utility').css('display', 'block');
+                $('.Utility').addClass(' animated slideInLeft');
+                //$('.Utility').removeClass('animated slideOutLeft');
+                 
+            } else {
+                $('.Utility').removeClass(' animated slideInLeft');
+                //$('.Utility').addClass(' animated slideOutLeft');
+                $('.Utility').css('display', 'none');
+                
+                //$('.Utility').removeClass('animated slideInLeft');
+            }
+        });
+    </script>
+    <script src="https://apis.google.com/js/platform.js" async defer>
+        { lang: 'vi' }
+    </script>
+    <script>
+
+
+        //comment facebook
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '340811506338045',
+                xfbml: true,
+                version: 'v2.10'
+            });
+            FB.AppEvents.logPageView();
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) { return; }
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/vi_VN/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+    //    (function (d, s, id) {
+    //    var js, fjs = d.getElementsByTagName(s)[0];
+    //    if (d.getElementById(id)) return;
+    //    js = d.createElement(s); js.id = id;
+    //    js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.10&appId=340811506338045";
+    //    fjs.parentNode.insertBefore(js, fjs);
+    //}(document, 'script', 'facebook-jssdk'));
+
+    </script>
+}

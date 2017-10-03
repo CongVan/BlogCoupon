@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "Gallery";
+}
+
+<h2>Gallery</h2>
+
+<div id="FileBrowser1"></div>
+
+
+
+@section js{
+<script src="~/ckfinder/ckfinder.js"></script>
+    <script>
+        
+        var finder = new CKFinder();
+        finder.basePath = '/ckfinder/';
+        // Setting custom width and user language.
+        finder.width = 700;
+        finder.language = 'de';
+        finder.create();
+</script>
+    }
+

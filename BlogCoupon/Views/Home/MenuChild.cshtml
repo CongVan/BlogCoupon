@@ -1,0 +1,9 @@
+﻿@using BlogCoupon.Models
+@model List<Category>
+@for (int i = 0; i < Model.Count; i++)
+{
+        @*<li><a href="@Url.RouteUrl("CateBySlug",new {slug=Model[i].Slug })">@Model[i].Name</a></li>*@
+        <li><a class="dropdown-item waves-effect waves-light" href="@Url.RouteUrl("CateBySlug",new {slug=Model[i].Slug })">@Model[i].Name</a></li>
+}
+    
+

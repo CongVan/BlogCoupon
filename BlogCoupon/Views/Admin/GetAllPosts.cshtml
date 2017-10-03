@@ -1,0 +1,341 @@
+﻿
+@{
+    ViewBag.Title = "Quản lý bài đăng";
+}
+@section css{
+    <link href="~/AdminAsset/css/bootstrap-tagsinput.css" rel="stylesheet" />
+
+    <style>
+        .k-grid tbody tr {
+            height: 40px;
+        }
+
+        .k-grid td {
+            white-space: nowrap;
+        }
+
+        .k-grid tr td {
+            /*border-bottom: 0.5px solid #a8a8a8;*/
+            border-style: solid;
+            border-width: 0 0 1px 1px;
+            /*color: #a8a8a8;*/
+        }
+    </style>
+}
+@section js{
+    <script src="~/ckeditor/ckeditor.js"></script>
+    <script src="~/ckeditor/styles.js"></script>
+    <script src="~/AdminAsset/js/bootstrap-tagsinput.min.js"></script>
+    <script src="~/ckfinder/ckfinder.js"></script>
+    <script src="~/ckfinder/skins/bootstrap/skin.js"></script>
+    <script>
+
+
+        $('#girdPosts').kendoGrid({
+            height: 550,
+            resizable: true,
+            selectable: true,
+            sortable: true,
+            //columnMenu: true,
+            scrollable: true,
+            editable: true,
+            dataSource: {
+                transport: {
+                    read: "/Admin/GetListPosts",
+
+                },
+                schema: {
+                    model: {
+                        id: "ID",
+                        fields: {
+                            CateName: { editable: false },
+                            Title: { editable: false },
+                            Tag: { editable: false },
+                            CreateDate: { editable: false, type: "date", },
+                            Update: { editable: false, type: "date", },
+                        }
+                    }
+                }
+            },
+            pageable: {
+                pageSizes: true,
+                refresh: true,
+                buttonCount: 5,
+                pageSize: 100,
+                pageSizes: ['all', 100, 150, 200],
+                messages: {
+                    itemsPerPage: "dòng / trang",
+                    display: "Hiển thị {0} - {1} / {2}",
+                    empty: "Không tìm thấy dữ liệu"
+                }
+            },
+            filterable: {
+                extra: false,
+                messages: { and: "và", or: "hoặc", filter: "Lọc", clear: "Hủy lọc", info: "" },
+                operators: {
+                    string: { eq: "Bằng", neq: "Khác", startswith: "Bắt đầu từ", contains: "Chứa", doesnotcontain: "Không chứa", endswith: "Kết thúc bằng" }
+                    , number: { eq: "=", neq: "!=", gte: ">=", gt: ">", lte: "<=", lt: "<" }
+                    , date: { neq: "!=", gte: ">=", gt: ">", lte: "<=", lt: "<" }
+                }
+            },
+            columns: [
+                { title: "Thao tác", command: [{ name: "destroy", text: "Xóa" }], width: "80px" },
+                // { field: "ID", title: "Mã blog", },
+                { field: "CateName", title: "Danh mục" },
+                { field: "Title", title: "Tiêu đề", template: '<a href="javascript:;" onclick="UpdatePost(#=ID#)">#=Title#</a>' },
+                { field: "Tag", title: "Tag" },
+                { field: "CreateDate", title: "Ngày tạo", format: "{0:dd/MM/yyyy}", type: "date", },
+                { field: "Update", title: "Cập nhật", format: "{0:dd/MM/yyyy}", type: "date", },
+
+            ],
+            remove: function (e) {
+                $.ajax({
+                    url: '/Admin/DeleteBlog?ID=' + e.model.ID,
+                    type: 'post',
+                    success: function (data) {
+                        if (data == 1) {
+                            alert('Xóa thành công!');
+                        } else {
+                            alert('Xóa thất bại!');
+                        }
+                    },
+                    error: function () {
+                        alert("Error Delete Categories!");
+                    }
+                });
+            },
+        });
+
+        function UpdatePost(id) {
+          //  alert(id);
+
+            $('#tab2').addClass('active');
+            $('#tab-second').addClass('active');
+
+            $('#tab1').removeClass('active');
+            $('#tab-first').removeClass('active');
+            $('#IDPost').val(id);
+        //    $('btnSubmitPosts').data('IDPost',id);
+            $.ajax({
+                async: false,
+                url: "/Admin/GetPost?Id=" + id,
+                success: function (data) {
+                    console.log(data);
+                    if (data == null) {
+                        alert('error load post update');
+                        return;
+                    }
+                    $('#txtTitle').val(data.Title);
+                    $('#txtSlug').val(bodauTiengViet(data.Title));
+                    $('#CbbCategory').data('kendoDropDownList').value(data.CategoryID);
+                    //$('#tagPost').val(data.Tag);
+                    $('#txtIntro').val(data.Intro);
+                    $('#tagPost').tagsinput('add', data.Tag);
+                    CKEDITOR.instances['editorContent'].setData(data.Content);
+                    //$('#editorContent').val(data.Content);
+                },
+                error: function () {
+                    alert('error load coupon update');
+                }
+            })
+        }
+        //#region Update
+        var editor = CKEDITOR.replace('editorContent', {});
+        CKFinder.setupCKEditor(null, '/ckfinder');
+
+        $('#CbbCategory').kendoDropDownList({
+            dataSource: {
+                transport: {
+                    cache: false,
+                    read: "/Admin/GetCbbCategories"
+                },
+                //group: { field: "GroupName" }
+            },
+            height: 200,
+            optionLabel: "Chọn danh mục",
+            dataTextField: "Name",
+            dataValueField: "ID",
+            template: '# if (GroupName == null) { #<span style="color:red">#:Name#</span>#} else {##:Name##} # '
+
+        });
+        $('#tagPost').tagsinput({
+            allowDuplicates: false,
+            maxTags: 4,
+
+        });
+        $('form').bind("keypress", function (e) {
+            if (e.keyCode == 13) {
+                e.preventDefault();
+                return false;
+            }
+        });
+        $('#btnSubmitPosts').on('click', function () {
+            if ($('#txtTitle').val() == '') {
+                alert('Nhập tiêu đề trước khi đăng bài ');
+                return;
+            }
+            console.log($('#CbbCategory').data('kendoDropDownList').value());
+            if ($('#CbbCategory').data('kendoDropDownList').value() == '') {
+                alert('Chọn danh mục trước khi đăng bài ');
+                return;
+            }
+            var id = $('#IDPost').val();
+            var title = $('#txtTitle').val();
+            var slug = $('#txtSlug').val();
+            var cate = $('#CbbCategory').data('kendoDropDownList').value();
+            var tag = $('#tagPost').val();
+            var Intro = $('#txtIntro').val();
+            var content = editor.getData();
+            
+                $.ajax({
+                    url: '/Admin/PUpdatePost',//?id='+id+'&title='+title+'&slug='+slug+'&cate='+cate+'&tag='+tag+'&content='+content,
+                    type: 'post',
+                    async:false,
+                    data: { id: id, title: title, slug: slug, cate: cate, tag: tag, content: content, Intro: Intro },
+                    success: function (data) {
+                        //console.log(data);
+                        if (data == 1) {
+                            alert('Cập nhật thành công');
+                            $('#girdPosts').data('kendoGrid').dataSource.read();
+                            $('#girdPosts').data('kendoGrid').refresh();
+                            UpdatePost(id);
+                        } else {
+                            alert("Cập nhật thất bại");
+                        }
+                    },
+                    error: function () {
+                        alert('error call update post');
+                    }
+
+                })
+        });
+
+
+        function bodauTiengViet(str) {
+            str = str.toLowerCase();
+            str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, 'a');
+            str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, 'e');
+            str = str.replace(/ì|í|ị|ỉ|ĩ/g, 'i');
+            str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, 'o');
+            str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, 'u');
+            str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, 'y');
+            str = str.replace(/đ/g, 'd');
+            str = str.replace(/\W+/g, ' ');
+            str = str.replace(/\s/g, '-');
+            return str;
+        }
+        $('#txtTitle').on('input', function () {
+            var title = $(this).val();
+            var slug = bodauTiengViet(title);
+            $('#txtSlug').val(slug);
+        });
+        $('#txtSlug').keypress(function (e) {
+            e.preventDefault();
+
+        })
+        //#endregion
+
+    </script>
+}
+<h2>Quản lý bài đăng</h2>
+<input type="hidden" id="IDPost" />
+<div class="page-content-wrap" style="font-size:14px">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default tabs">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="active" id="tab1"><a href="#tab-first" role="tab" data-toggle="tab">Danh sách</a></li>
+                    <li id="tab2"><a href="#tab-second" role="tab" data-toggle="tab">Cập nhật</a></li>
+                </ul>
+                <div class="panel-body tab-content">
+                    <div class="tab-pane active" id="tab-first">
+                        <div id="girdPosts">
+
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab-second">
+                        <div id="updatecontent">
+                            <div class="panel-body" style="text-align:-webkit-center">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Tiêu đề </label>
+                                            <div class="col-md-9">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                                    <input type="text" class="form-control" name="Title" id="txtTitle" required />
+                                                </div>
+                                                <span class="help-block">VD: Tiêu đề cho bài viết</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Slug</label>
+                                            <div class="col-md-9">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><span class="fa fa-link"></span></span>
+                                                    <input type="text" class="form-control" name="Slug" id="txtSlug" style="font-weight:bold" />
+                                                </div>
+                                                <span class="help-block">Url tự động phát sinh theo tiêu đề bài viết</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Giới thiệu</label>
+                                            <div class="col-md-9">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><span class="fa fa-newspaper-o"></span></span>
+                                                    <input type="text" class="form-control" name="Intro" id="txtIntro" min="100" max="250" />
+                                                </div>
+                                                <span class="help-block">Giới thiệu bài viết (từ 100-250 ký tự)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Danh mục</label>
+                                            <div class="col-md-9">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><span class="fa fa-list"></span></span>
+                                                    <input type="text" class="form-control" id="CbbCategory" name="CategoryID" required>
+                                                </div>
+                                                <span class="help-block">Bài viết thuộc danh mục nào?</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label">Tags</label>
+                                            <div class="col-md-9">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><span class="fa fa-tags"></span></span>
+                                                    <input id="tagPost" name="Tag" style="float:left;min-width:100%;max-width:100%;" data-role="tagsinput" type="text" class="form-control" />
+                                                </div>
+                                                <span class="help-block">Tag giúp tìm kiếm bài viết. Tối đa 4 tags</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="col-md-12 control-label" style="text-align:center">Nội dung</label>
+                                            <div class="col-md-12">
+                                                <div class="input-group">
+                                                    <textarea class="form-control ckeditor" name="Content" id="editorContent" cols="10" rows="10"></textarea>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="panel-footer " style="text-align:center">
+                                <button class="btn btn-primary" id="btnSubmitPosts" data-IDPost="">Hoàn tất</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

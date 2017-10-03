@@ -1,0 +1,160 @@
+﻿
+@{
+    ViewBag.Title = "Tạo mới Coupon";
+}
+
+<div class="page-content-wrap" style="font-size:14px">
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <form class="form-horizontal" id="frmPost" method="post" >
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><strong>ĐĂNG COUPON</strong></h3>
+                        @*<ul class="panel-controls">
+                                <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                            </ul>*@
+                        @if (ViewBag.AddSuccess != null)
+                        {
+                            <span style="float:right;font-size:14px;color:white" class="panel-title label label-success"><i class="fa fa-check"></i> @ViewBag.AddSuccess</span>
+                        }
+
+                    </div>
+                    @*<div class="panel-body">
+                            <p>This is non libero bibendum, scelerisque arcu id, placerat nunc. Integer ullamcorper rutrum dui eget porta. Fusce enim dui, pulvinar a augue nec, dapibus hendrerit mauris. Praesent efficitur, elit non convallis faucibus, enim sapien suscipit mi, sit amet fringilla felis arcu id sem. Phasellus semper felis in odio convallis, et venenatis nisl posuere. Morbi non aliquet magna, a consectetur risus. Vivamus quis tellus eros. Nulla sagittis nisi sit amet orci consectetur laoreet. Vivamus volutpat erat ac vulputate laoreet. Phasellus eu ipsum massa.</p>
+                        </div>*@
+                    <div class="panel-body" style="text-align:-webkit-center">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Tiêu đề </label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                            <input type="text" class="form-control" name="Title" id="txtTitle" required />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Bài đăng</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa fa-list"></span></span>
+                                            <input type="text" class="form-control" name="Cate" id="txtCate" style="font-size:14px" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Ngành</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa fa-list"></span></span>
+                                            <input type="text" class="form-control" name="Branch" id="txtBranch" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Loại Coupon</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa fa-usd"></span></span>
+                                            <select class="form-control select" name="Type" id="Type">
+                                                <option value="1">Mã giảm giá</option>
+                                                <option value="2">Link affiliate</option>
+                                            </select>
+                                            </div>
+                                        </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Ngày hết hạn</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                                            <input type="text" style="font-size:14px" class="form-control" id="DateEnd" name="DateEnd">
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Link</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa fa-link"></span></span>
+                                            <input type="text" class="form-control" id="txtLink" name="Link">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Mã giảm giá</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa fa-tags"></span></span>
+                                            <input type="text" class="form-control" id="txtCode" name="Code">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Giảm</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-star-o"></i></span>
+                                            <input type="number" class="form-control" id="txtPercent" name="Percent" min="1" max="100" value="50">
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Lưu ý</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa fa-tags"></span></span>
+                                            <input type="text" class="form-control" id="txtNote" name="Note">
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer " style="text-align:center">
+                        @*<button class="btn btn-default" id="btnClear">Làm mới</button>*@
+                        <button class="btn btn-primary" type="submit" id="btnSubmitPosts">Hoàn tất</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+@section js{
+    <script>
+        $('#DateEnd').kendoDatePicker({
+            format: "dd/MM/yyyy",
+            value: new Date(),
+            culture:"vi-VN"
+        });
+        $('#txtCate').kendoDropDownList({
+            dataSource: {
+                transport: {
+                    cache: false,
+                    read: "/Admin/GetListPostsCombobox"
+                },
+                //group: { field: "GroupName" }
+            },
+            height: 350,
+            optionLabel: "Chọn bài đăng...",
+            dataTextField: "Title",
+            dataValueField: "ID",
+            //template: '# if (GroupName == null) { #<span style="color:red">#:Name#</span>#} else {##:Name##} # '
+
+        });
+    </script>
+
+}

@@ -1,0 +1,200 @@
+﻿
+@{
+    ViewBag.Title = "Cập nhật hình bài viết";
+}
+@section css{
+
+    <style>
+        .k-grid tbody tr {
+            height: 40px;
+        }
+
+        .k-grid td {
+            white-space: nowrap;
+        }
+
+        .k-grid tr td {
+            /*border-bottom: 0.5px solid #a8a8a8;*/
+            border-style: solid;
+            border-width: 0 0 1px 1px;
+            /*color: #a8a8a8;*/
+        }
+    </style>
+}
+
+
+@section js{
+<script src="~/ckeditor/ckeditor.js"></script>
+@*<script src="~/ckfinder/ckfinder.js"></script>*@
+<script src="~/ckfinder/ckfinder_v1.js"></script>
+<script src="~/ckfinder/skins/bootstrap/skin.js"></script>
+
+    <script>
+        $('#girdPosts').kendoGrid({
+            height: 550,
+            resizable: true,
+            selectable: true,
+            sortable: true,
+            //columnMenu: true,
+            scrollable: true,
+            editable: true,
+            dataSource: {
+                transport: {
+                    read: "/Admin/GetListPosts",
+
+                },
+                schema: {
+                    model: {
+                        id: "ID",
+                        fields: {
+                           
+                            Title: { editable: false },
+                            ImgThumb: { editable: true },
+                            Img: { editable: false },
+                            Update: { editable: false, type: "date", },
+                        }
+                    }
+                }
+            },
+            pageable: {
+                pageSizes: true,
+                refresh: true,
+                buttonCount: 5,
+                pageSize: 100,
+                pageSizes: ['all', 100, 150, 200],
+                messages: {
+                    itemsPerPage: "dòng / trang",
+                    display: "Hiển thị {0} - {1} / {2}",
+                    empty: "Không tìm thấy dữ liệu"
+                }
+            },
+            filterable: {
+                extra: false,
+                messages: { and: "và", or: "hoặc", filter: "Lọc", clear: "Hủy lọc", info: "" },
+                operators: {
+                    string: { eq: "Bằng", neq: "Khác", startswith: "Bắt đầu từ", contains: "Chứa", doesnotcontain: "Không chứa", endswith: "Kết thúc bằng" }
+                    , number: { eq: "=", neq: "!=", gte: ">=", gt: ">", lte: "<=", lt: "<" }
+                    , date: { neq: "!=", gte: ">=", gt: ">", lte: "<=", lt: "<" }
+                }
+            },
+            columns: [
+                
+                // { field: "ID", title: "Mã blog", },
+                { field: "Img", title: "Hình ảnh", template: '<img src="#=ImgThumb#" width="40%"  />', },
+                { field: "ImgThumb", title: "Url " },
+                { field: "Title", title: "Tiêu đề" },
+                { command: { text: "Chọn hình", click: BrowseServer } },
+            
+
+            ],
+            toolbar: ["save"],
+            saveChanges: SaveChanges,
+            //save: function (e) {
+            //    console.log("save");
+            //    console.log(e);
+            //    var finder = new CKFinder();
+            //    finder.BasePath = '/ckfinder/';
+            //    finder.SelectFunction = function ShowFileInfo(fileUrl, data) {
+            //        // $('#txtTest').val(data['fileUrl']);
+            //        e.model.ImgThumb = data['fileUrl'];
+            //    };
+            //    finder.SelectFunctionData = 'test';
+            //    finder.Popup();
+            //    //$.ajax({
+            //    //    url: '/Admin/UpdateCategories',
+            //    //    data: { ID: e.model.ID, Name: e.model.Name },
+            //    //    type: 'post',
+            //    //    success: function (data) {
+            //    //        if (data == 1) {
+            //    //            alert('Cập nhật thành công!');
+            //    //            $('#gridCategories').data('kendoTreeList').dataSource.read();
+            //    //            $('#gridCategories').data('kendoTreeList').refresh();
+            //    //        } else {
+            //    //            alert('Cập nhật thất bại!');
+            //    //        }
+            //    //    },
+            //    //    error: function () {
+            //    //        alert("Error Update Categories!");
+            //    //    }
+            //    //});
+            //},
+        });
+
+        function SaveChanges(e) {
+            
+            if (!confirm("Bạn có chắc muốn lưu tất cả thay đổi?")) {
+                e.preventDefault();
+            }
+            var data = $('#girdPosts').data("kendoGrid").dataSource.data();
+            //console.log(e);
+            //console.log(dataItem.data());
+            var lst = [];
+            data.forEach(function (item) {
+                lst.push({ ID: item.ID, Url: item.ImgThumb });
+            });
+            console.log(lst);
+            e.preventDefault();
+            $.ajax({
+                url: "/Admin/PUpdateImage",
+                data: { lst: lst },
+                success: function (data) {
+                    if (data >= 0) {
+                        alert("Cập nhật thành công");
+                        $('#girdPosts').data('kendoGrid').dataSource.read();
+                        $('#girdPosts').data('kendoGrid').refresh();
+                    } else {
+                        alert("Cập nhật thất bại");
+                    }
+                },
+                error: function () {
+                    alert('error update imgae post');
+                }
+            })
+        }
+        function BrowseServer(e) {
+            
+            var finder = new CKFinder();
+            finder.BasePath = '/ckfinder/';
+            finder.SelectFunction = ShowFileInfo;
+            finder.Popup();
+            //console.log(e);
+
+            var dataItem = $('#girdPosts').data("kendoGrid").dataItem($(e.target).closest("tr"));
+            $('#girdPosts').data("kendoGrid").select("tr[data-uid='" + dataItem.uid + "']");
+        }
+
+        function ShowFileInfo(fileUrl, data) {
+            //alert(fileUrl);
+            var grd = $('#girdPosts').data('kendoGrid');
+            var selectedItem = grd.dataItem(grd.select());
+            //console.log(selectedItem);
+            selectedItem.set("ImgThumb", fileUrl);
+        }
+        
+        //console.log($('#girdPosts').data('kendoGrid'));
+    </script>
+}
+<h2>Cập nhật ảnh bìa cho bài viết</h2>
+<div class="page-content-wrap" style="font-size:14px">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default tabs">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="active" id="tab1"><a href="#tab-first" role="tab" data-toggle="tab">Danh sách</a></li>
+                </ul>
+                <div class="panel-body tab-content">
+                    <div class="tab-pane active" id="tab-first">
+                        
+
+                        <div id="girdPosts">
+
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

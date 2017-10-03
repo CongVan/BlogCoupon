@@ -1,0 +1,243 @@
+﻿
+@{
+    ViewBag.Title = "Danh Mục";
+}
+@section js{
+
+    <script src="~/Scripts/Categories.js"></script>
+    <script>
+        $('#gridCategories').kendoTreeList({
+            dataSource: {
+                type: "json",
+                transport: {
+                    read: "/Admin/GetCategories",
+                    update: function (e) { },
+                    destroy: function (e) { },
+                    //parameterMap: function (options, operation) {
+                    //    if (operation !== "read" && options.models) {
+                    //        return { models: kendo.stringify(options.models) };
+                    //    }
+                    //}
+                },
+                batch: true,
+                schema: {
+                    model: {
+                        id: "ID",
+                        parentId: "ParentID",
+                        fields: {
+                            ParentID: { field: "ParentID", nullable: true, type: "number" },
+                            ID: { field: "ID", type: "number" },
+                            Name: { field: "Name", type: "string", nullable: false },
+                        },
+
+                        expanded: true,
+                    }
+                },
+                pageSize: 20,
+            },
+            height: 400,
+            editable: true,
+            groupable: false,
+            sortable: true,
+            pageable: {
+                refresh: true,
+                pageSizes: true,
+                buttonCount: 5,
+            },
+            autoBind: true,
+            columns: [
+
+                { field: "Name", title: "Tên", width: 40 },
+                {
+                    title: "Thao tác", command: [{ name: "edit", text: "Sửa" },
+                    { name: "destroy", text: "Xóa" }], width: 60
+                },
+            ],
+            save: function (e) {
+                console.log("save");
+                console.log(e);
+                var slug = bodauTiengViet(e.model.Name);
+                $.ajax({
+                    url: '/Admin/UpdateCategories',
+                    data: { ID: e.model.ID, Name: e.model.Name, Slug: slug },
+                    type: 'post',
+                    success: function (data) {
+                        if (data == 1) {
+                            alert('Cập nhật thành công!');
+                            $('#gridCategories').data('kendoTreeList').dataSource.read();
+                            $('#gridCategories').data('kendoTreeList').refresh();
+                        } else {
+                            alert('Cập nhật thất bại!');
+                        }
+                    },
+                    error: function () {
+                        alert("Error Update Categories!");
+                    }
+                });
+            },
+            remove: function (e) {
+                console.log("remove");
+                console.log(e);
+                $.ajax({
+                    url: '/Admin/DeleteCategories?ID=' + e.model.ID,
+                    type: 'post',
+                    success: function (data) {
+                        if (data == 1) {
+                            alert('Xóa thành công!');
+                        } else {
+                            alert('Xóa thất bại!');
+                        }
+                    },
+                    error: function () {
+                        alert("Error Delete Categories!");
+                    }
+                });
+            }
+        });
+        //console.log($('#gridCategories').data('kendoTreeList').dataSource);
+        $('#btnReloadGrid').on('click', function () {
+            $('#gridCategories').data('kendoTreeList').dataSource.read();
+            $('#gridCategories').data('kendoTreeList').refresh();
+        });
+
+        $('#CbbCategories').kendoDropDownList({
+            dataSource: {
+                transport: {
+                    cache: false,
+                    read: "/Admin/GetCbbCategories"
+                },
+                //group: { field: "GroupName" }
+            },
+            height: 200,
+            optionLabel: "Chọn mục cha...",
+            dataTextField: "Name",
+            dataValueField: "ID",
+            template: '# if (GroupName == null) { #<span style="color:red">#:Name#</span>#} else {##:Name##} # '
+
+        });
+        console.log($('#CbbCategories').data('kendoDropDownList').dataSource);
+        $('#btnSubmitAddCate').on('click', function () {
+            var parentid = $('#CbbCategories').data('kendoDropDownList').value();
+            var name = $('#NameAdd').val();
+            var slug = bodauTiengViet(name);
+            $.ajax({
+                url: "/Admin/AddCategories",
+                type: 'post',
+                data: { ParentID: parentid, Name: name,Slug:slug },
+                success: function (data) {
+                    if (data == 1) {
+                        alert('Thêm thành công');
+                        $('#CbbCategories').data("kendoDropDownList").dataSource.read();
+                        $('#CbbCategories').data('kendoDropDownList').refresh();
+                        $('#gridCategories').data('kendoTreeList').dataSource.read();
+                        $('#gridCategories').data('kendoTreeList').refresh();
+                    } else {
+                        alert('Thêm thất bại');
+                    }
+                },
+                error: function () {
+                    alert('Error Add Categories');
+                },
+                beforeSend: function () {
+                    $('#btnSubmitAddCate').attr('disabled');
+                },
+                complete: function () {
+                    $('#btnSubmitAddCate').removeAttr('disabled');
+                },
+            })
+        });
+        $('#tab-second').on('click', function () {
+            $('#CbbCategories').data("kendoDropDownList").dataSource.read();
+            $('#CbbCategories').data('kendoDropDownList').refresh();
+        });
+        function bodauTiengViet(str) {
+            str = str.toLowerCase();
+            str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, 'a');
+            str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, 'e');
+            str = str.replace(/ì|í|ị|ỉ|ĩ/g, 'i');
+            str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, 'o');
+            str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, 'u');
+            str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, 'y');
+            str = str.replace(/đ/g, 'd');
+            str = str.replace(/\W+/g, ' ');
+            str = str.replace(/\s/g, '-');
+            return str;
+        }
+    </script>
+    @*<script type="text/x-kendo-template" id="CbbTemplate">
+        #if(ParentID==null){#
+        <span style="color:#ee2e2e">#: Name # </span>
+        #}else{#
+        <span style="color:#808080">#: Name #</span>
+        #}#
+    </script>*@
+}
+
+
+
+    <h2>Quản lý danh mục</h2>
+    <div class="page-content-wrap" style="font-size:14px;">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default tabs">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="active"><a href="#tab-first" role="tab" data-toggle="tab">Danh sách</a></li>
+                        <li><a href="#tab-second" role="tab" data-toggle="tab">Thêm mới</a></li>
+                    </ul>
+                    <div class="panel-body tab-content">
+                        <div class="tab-pane active" id="tab-first">
+                            <div style="width:100%; padding:10px">
+                                <button class="btn btn-default" id="btnReloadGrid"><i class="glyphicon glyphicon-refresh"></i>Làm mới</button>
+                                <div class="clearfix"></div>
+                                <br />
+                                <div id="gridCategories" style="font-size:14px;">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab-second">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="panel panel-default" style="font-size:14px;">
+                                        <div class="panel-body" style="height:800px">
+                                            <div style="width:50%">
+                                                <div class="form-group">
+                                                    <label class="col-md-4">Chọn mục cha</label>
+                                                    <div class="col-md-8">
+                                                        <div id="CbbCategories" style="width:100%;font-size:14px"></div>
+                                                        <div class="help-block" style="font-size:12px">Nếu chú muốn thêm mục cha luôn thì khỏi chọn mục này!</div>
+                                                    </div>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                                <br />
+
+                                                <div class="form-group">
+                                                    <label class="col-md-4">Tên </label>
+                                                    <div class="col-md-8">
+                                                        <input class="k-textbox" style="width:100%" id="NameAdd" />
+                                                    </div>
+                                                </div>
+                                                <div class="clearfix"></div>
+                                                <br />
+                                                <div class="form-group">
+                                                    <div class="col-md-4"> </div>
+                                                    <div class="col-md-6">
+                                                        <button class="btn btn-primary" id="btnSubmitAddCate"><i class="fa fa-check"></i>Thêm</button>
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  

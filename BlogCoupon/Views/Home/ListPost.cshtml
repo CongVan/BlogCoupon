@@ -1,0 +1,62 @@
+﻿@using BlogCoupon.Models
+@model List<Post>
+
+@foreach (var item in Model)
+{
+    <div href="#" class="list-group-item list-group-item-action flex-column align-items-lg-start">
+        <div class="row">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-2"></h5>
+                @{ 
+                    var s = DateTime.Now.Subtract(item.CreateDate.Value).TotalMinutes;
+                    var h = DateTime.Now.Subtract(item.CreateDate.Value).TotalHours;
+                    var d = DateTime.Now.Subtract(item.CreateDate.Value).TotalDays;
+                }
+                @if (d < 1 && h<1  )
+                {
+                <small class="text-muted">@s.ToString("0") phút trước</small>
+
+                }
+                @if (d < 1 && h > 1)
+                {
+                    <small class="text-muted">@h.ToString("0") giờ trước</small>
+
+                }
+                @if (d >1 && d < 4)
+                {
+                    <small class="text-muted">@d.ToString("0") ngày trước</small>
+
+                }
+            </div>
+            <!--Grid column-->
+            <div class="col-lg-4 col-sm-12 pl-0 pt-0 pr-1 pb-1">
+                <!--Featured image-->
+                <div class="view overlay hm-white-slight z-depth-1-half">
+                    <img src="@item.ImgThumb" class="img-fluid" alt="@item.Title">
+                    <a href="@Url.RouteUrl("PageBySlug", new { slug=item.Slug })">
+                        <div class="mask"></div>
+                    </a>
+                </div>
+            </div>
+            <!--Grid column-->
+            <!--Grid column-->
+            <div class="col-lg-8 col-sm-12 ml-xl-8 pb-1 text-left py-0">
+                <!--Excerpt-->
+                @*<a href="" class="cyan-text"><h6 class="pb-1"><i class="fa fa-plane"></i><strong> Travels</strong></h6></a>*@
+                <p class="mb-1">
+                    <a href="@(String.IsNullOrEmpty(item.Slug)?"#":@Url.RouteUrl("PageBySlug", new { slug=item.Slug }))"style="color:inherit">
+                        <strong>
+                            @item.Title
+                        </strong>
+                    </a>
+                    
+                </p>
+                <small class="text-muted"><i class="fa fa-calendar"></i>&nbsp; @(item.CreateDate==null ? "" : item.CreateDate.Value.Date.ToString("dd/MM/yyyy") )</small>
+
+            </div>
+            <!--Grid column-->
+
+        </div>
+
+    </div>
+}

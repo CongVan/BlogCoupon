@@ -1,0 +1,336 @@
+﻿
+@{
+    ViewBag.Title = "Đăng Bài";
+}
+@section css{
+    @*<link href="~/AdminAsset/ckeditor/contents.css" rel="stylesheet" />*@
+    <link href="~/AdminAsset/css/bootstrap-tagsinput.css" rel="stylesheet" />
+    <style>
+        .help-block {
+            font-size: 12px;
+        }
+
+        .bootstrap-tagsinput {
+            float: left;
+        }
+    </style>
+}
+
+<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap" style="font-size:14px">
+
+    <div class="row">
+        <div class="col-md-12">
+
+            <form class="form-horizontal" id="frmPost" method="post">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><strong>ĐĂNG BÀI </strong></h3>
+                        @*<ul class="panel-controls">
+                                <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                            </ul>*@
+                        @if (ViewBag.AddSuccess != null)
+                        {
+                            <span style="float:right;font-size:14px;color:white" class="panel-title label label-success"><i class="fa fa-check"></i> @ViewBag.AddSuccess</span>
+                        }
+
+                    </div>
+
+                    @*<div class="panel-body">
+                            <p>This is non libero bibendum, scelerisque arcu id, placerat nunc. Integer ullamcorper rutrum dui eget porta. Fusce enim dui, pulvinar a augue nec, dapibus hendrerit mauris. Praesent efficitur, elit non convallis faucibus, enim sapien suscipit mi, sit amet fringilla felis arcu id sem. Phasellus semper felis in odio convallis, et venenatis nisl posuere. Morbi non aliquet magna, a consectetur risus. Vivamus quis tellus eros. Nulla sagittis nisi sit amet orci consectetur laoreet. Vivamus volutpat erat ac vulputate laoreet. Phasellus eu ipsum massa.</p>
+                        </div>*@
+                    <div class="panel-body" style="text-align:-webkit-center">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Tiêu đề </label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                            <input type="text" class="form-control" name="Title" id="txtTitle" required />
+                                        </div>
+                                        <span class="help-block">VD: Tiêu đề cho bài viết</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Slug</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa fa-link"></span></span>
+                                            <input type="text" class="form-control" name="Slug" id="txtSlug" style="font-weight:bold" />
+                                        </div>
+                                        <span class="help-block">Url tự động phát sinh theo tiêu đề bài viết</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Giới thiệu</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa fa-newspaper-o"></span></span>
+                                            <input type="text" class="form-control" name="Intro" id="txtIntro" min="100"  max="250" />
+                                        </div>
+                                        <span class="help-block">Giới thiệu bài viết (từ 100-250 ký tự)</span>
+                                    </div>
+                                </div>
+
+
+                                @*<div class="form-group">
+                                        <label class="col-md-3 control-label">Password</label>
+                                        <div class="col-md-9 col-xs-12">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><span class="fa fa-unlock-alt"></span></span>
+                                                <input type="password" class="form-control" />
+                                            </div>
+                                            <span class="help-block">Password field sample</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Textarea</label>
+                                        <div class="col-md-9 col-xs-12">
+                                            <textarea class="form-control" rows="5"></textarea>
+                                            <span class="help-block">Default textarea field</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">File</label>
+                                        <div class="col-md-9">
+                                            <input type="file" class="fileinput btn-primary" name="filename" id="filename" title="Browse file" />
+                                            <span class="help-block">Input type file</span>
+                                        </div>
+                                    </div>*@
+
+                            </div>
+                            <div class="col-md-6">
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Danh mục</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa fa-list"></span></span>
+                                            <input type="text" class="form-control" id="CbbCategory" name="CategoryID" required>
+                                        </div>
+                                        <span class="help-block">Bài viết thuộc danh mục nào?</span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Tags</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa fa-tags"></span></span>
+                                            <input id="tagPost" name="Tag" style="float:left;min-width:100%;max-width:100%;" data-role="tagsinput" type="text" class="form-control" />
+                                        </div>
+                                        <span class="help-block">Tag giúp tìm kiếm bài viết. Tối đa 4 tags</span>
+                                    </div>
+                                </div>
+
+                                @*<div class="form-group">
+                                        <label class="col-md-3 control-label">Select</label>
+                                        <div class="col-md-9">
+                                            <select class="form-control select">
+                                                <option>Option 1</option>
+                                                <option>Option 2</option>
+                                                <option>Option 3</option>
+                                                <option>Option 4</option>
+                                                <option>Option 5</option>
+                                            </select>
+                                            <span class="help-block">Select box example</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label">Checkbox</label>
+                                        <div class="col-md-9">
+                                            <label class="check"><input type="checkbox" class="icheckbox" checked="checked" /> Checkbox title</label>
+                                            <span class="help-block">Checkbox sample, easy to use</span>
+                                        </div>
+                                    </div>*@
+
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="col-md-12 control-label" style="text-align:center">Nội dung</label>
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                            <textarea class="form-control ckeditor" name="Content" id="editorContent" cols="10" rows="10" style="width:100%"></textarea>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    @*<a  id="btnTest">Test</a>*@
+                    @*<input id="xFilePath" name="FilePath" type="text" size="60" />
+                        <input type="button" value="Browse Server" onclick="BrowseServer( 'xFilePath' );" />
+                        <input id="xImagePath" name="ImagePath" type="text" size="60" />
+                        <input type="button" value="Browse Server" onclick="BrowseServer( 'xImagePath' );" />*@
+                    <div class="panel-footer " style="text-align:center">
+                        <button class="btn btn-default" id="btnClear">Làm mới</button>
+
+                        <button class="btn btn-primary" type="submit" id="btnSubmitPosts">Hoàn tất</button>
+
+                        @*<input type="text" id="txtTest"/>*@
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+</div>
+<!-- END PAGE CONTENT WRAPPER -->
+@section js{
+
+    <script src="~/ckeditor/ckeditor.js"></script>
+    <script src="~/ckeditor/styles.js"></script>
+    <script src="~/AdminAsset/js/bootstrap-tagsinput.min.js"></script>
+
+
+    <script src="~/ckfinder/ckfinder.js"></script>
+    @*<script src="~/ckfinder/ckfinder_v1.js"></script>*@
+    <script src="~/ckfinder/skins/bootstrap/skin.js"></script>
+    <script>
+
+
+
+        $('#CbbCategory').kendoDropDownList({
+            dataSource: {
+                transport: {
+                    cache: false,
+                    read: "/Admin/GetCbbCategories"
+                },
+                //group: { field: "GroupName" }
+            },
+            height: 200,
+            optionLabel: "Chọn danh mục",
+            dataTextField: "Name",
+            dataValueField: "ID",
+            template: '# if (GroupName == null) { #<span style="color:red">#:Name#</span>#} else {##:Name##} # '
+
+        });
+        $('#tagPost').tagsinput({
+            allowDuplicates: false,
+            maxTags: 4,
+
+        });
+        $('form').bind("keypress", function (e) {
+            if (e.keyCode == 13) {
+                e.preventDefault();
+                return false;
+            }
+        });
+        $('#btnSubmitPosts').on('submit', function () {
+            if ($('#txtTitle').val() == '') {
+                alert('Nhập tiêu đề trước khi đăng bài ');
+                return;
+            }
+            console.log($('#CbbCategory').data('kendoDropDownList').value());
+            if ($('#CbbCategory').data('kendoDropDownList').value() == '') {
+                alert('Chọn danh mục trước khi đăng bài ');
+                return;
+            }
+            $('#frmPost').submit();
+        });
+
+        $('#btnClear').on('click', function () {
+            $(this).closest('form').find("input[type=text], textarea").val("");
+        });
+
+        //function convertToSlug (str) {
+        //    str = str.replace(/^\s+|\s+$/g, ''); // trim
+        //    str = str.toLowerCase();
+
+        //    // remove accents, swap ñ for n, etc
+        //    var from = "áéíóúýÁÉÍÓÚÝàèìòùỳÀÈÌÒÙỲảẻỉỏủỷẢẺỈỎỦỶãẽĩõũỹÃẼĨÕŨỸạẹịọụỵẠẸỊỌỤỴâêôưÂÊÔƯấếốứẤẾỐỨầềồừẦỀỒỪẩểổửẨỂỔỬậệộựẬỆỘỰ";
+        //    var to =   "aeiouyAEIOUYaeiouyAEIOUYaeiouyAEIOUYaeiouyAEIOUYaeiouyAEIOUYaeouAEOUaeouAEOUaeouAEOUaeouAEOUaeouAEOU";
+        //    for (var i = 0, l = from.length; i < l; i++) {
+        //        str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+        //    }
+
+        //    str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
+        //        .replace(/\s+/g, '-') // collapse whitespace and replace by -
+        //        .replace(/-+/g, '-'); // collapse dashes
+
+        //    return str;
+        //};
+        function bodauTiengViet(str) {
+            str = str.toLowerCase();
+            str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, 'a');
+            str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, 'e');
+            str = str.replace(/ì|í|ị|ỉ|ĩ/g, 'i');
+            str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, 'o');
+            str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, 'u');
+            str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, 'y');
+            str = str.replace(/đ/g, 'd');
+            str = str.replace(/\W+/g, ' ');
+            str = str.replace(/\s/g, '-');
+            return str;
+        }
+        $('#txtTitle').on('input', function () {
+            var title = $(this).val();
+            var slug = bodauTiengViet(title);
+            $('#txtSlug').val(slug);
+        });
+        $('#txtSlug').keypress(function (e) {
+            e.preventDefault();
+
+        });
+
+        var editor = CKEDITOR.replace('editorContent');
+        CKFinder.setupCKEditor(editor, '/ckfinder/');
+
+        //function BrowseServer(inputId) {
+        //    var finder = new CKFinder();
+        //    finder.BasePath = '/ckfinder/';
+        //    finder.SelectFunction = ShowFileInfo;
+        //    finder.SelectFunctionData = inputId;
+        //    finder.Popup();
+        //}
+
+        //function SetFileField(fileUrl, data) {
+        //    document.getElementById(data["selectFunctionData"]).value = fileUrl;
+        //}
+        //function ShowFileInfo(fileUrl, data) {
+        //    $('#txtTest').val(data['fileUrl']);
+        //    //alert('The selected file URL is "' + fileUrl + '"');
+
+        //    //var formatDate = function (date) {
+        //    //    return date.substr(0, 4) + "-" + date.substr(4, 2) + "-" + date.substr(6, 2) + " " + date.substr(8, 2) + ":" + date.substr(10, 2);
+        //    //}
+
+        //    //alert('The selected file URL is: "' + data['fileUrl'] + '"');
+        //    //alert('The size of selected file is: "' + data['fileSize'] + 'KB"');
+        //    //alert('The selected file was last modifed on: "' + formatDate(data['fileDate']) + '"');
+        //    //alert('The data passed to the function is: "' + data['selectFunctionData'] + '"');
+        //}
+        //$('#btnTest').on('click', function (e) {
+        //    e.preventDefault();
+        //    var finder = new CKFinder();
+        //    finder.selectActionFunction = function (url) {
+        //        $('#txtTest').val(url);
+        //    };
+        //    finder.popup();
+        //    //CKFinder.popup('/ckfinder', '100%', 400);
+        //    //var finder = new CKFinder();
+        //    //finder.basePath = '/ckfinder/';
+        //    //finder.selectActionFunction = function (url) {
+        //    //    $('#txtTest').val(url);
+        //    //};
+        //    //finder.SelectFunction = 'ShowFileInfo';
+        //    //finder.popup();
+        //    //var finder = new CKFinder();
+        //    //finder.basePath = '/ckfinder/';
+        //    //// Setting custom width and user language.
+        //    //finder.width = 700;
+        //    //finder.language = 'vi';
+        //    //finder.popup();
+
+
+        //});
+    </script>
+}
