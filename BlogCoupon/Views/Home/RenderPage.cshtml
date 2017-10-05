@@ -1,4 +1,5 @@
 ﻿@using BlogCoupon.Models
+
 @model Post
 @{
     ViewBag.Title = Model.Title;
@@ -73,32 +74,34 @@
 
 @if (ViewBag.NotFound == null)
 {
-<!--Section: Blog v.4-->
-<section class=" section-blog-fw">
+    <!--Section: Blog v.4-->
+    @*<a class="btn btn-success" onclick="toastr.success('Hi! I am success message.');">Success message</a>*@
+
+    <section class=" section-blog-fw">
         <!--Grid row-->
         <div class="row">
-            
-                <ul class="fixed-action-btn" style="right:auto;left:20px;" id="UtiPost">
-                    <li class="Utility" id="btnComment" data-toggle="tooltip" data-placement="right" title="Bình luận bài viết"><a class="btn-floating green waves-effect waves-light"><i class="fa fa-comments"></i></a></li>
-                    <li class="Utility" data-toggle="tooltip" data-placement="right" title="Góp ý cho tác giả">
-                        <a class="btn-floating yellow darken-1 waves-effect waves-light"><i class="fa fa-pencil"></i></a>
-                    </li>
-                    <li class="Utility" data-toggle="tooltip" data-placement="right" title="Chia sẻ qua facebook">
-                        <a href="#"
-                           onClick="MyWindow=window.open('https://www.facebook.com/sharer/sharer.php?u=https://developers.facebook.com/docs/plugins/','Chia sẻ lên Facebook','width=100,height=300'); return false;"
-                           class=" btn-floating btn-fb  waves-effect waves-light"><i class="fa fa-facebook"></i></a>
-                    </li>
-                    <li class="Utility" data-toggle="tooltip" data-placement="right" title="Chia sẻ qua g+">
-                        <a href="#" onclick="window.open('https://plus.google.com/share?url=https://caohieu.com/','Chia sẻ lên G+', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=400');return false;"
-                           class="  btn-floating btn-gplus  waves-effect waves-light"><i class="fa fa-google-plus"></i></a>
-                    </li>
-                    <li id="CollapseUtility" data-toggle="tooltip" data-placement="right" title="Thu gọn">
-                        <a class="btn-floating btn-default  waves-effect waves-light"><i class="fa fa-angle-left"></i></a>
-                    </li>
-                </ul>
 
-           
-            
+            <ul class="fixed-action-btn" style="right:auto;left:20px;" id="UtiPost">
+                <li class="Utility" id="btnComment" data-toggle="tooltip" data-placement="right" title="Bình luận bài viết"><a class="btn-floating green waves-effect waves-light"><i class="fa fa-comments"></i></a></li>
+                <li class="Utility" data-toggle="tooltip" data-placement="right" title="Góp ý cho tác giả">
+                    <a class="btn-floating yellow darken-1 waves-effect waves-light"><i class="fa fa-pencil"></i></a>
+                </li>
+                <li class="Utility" data-toggle="tooltip" data-placement="right" title="Chia sẻ qua facebook">
+                    <a href="#"
+                       onClick="MyWindow=window.open('https://www.facebook.com/sharer/sharer.php?u=https://developers.facebook.com/docs/plugins/','Chia sẻ lên Facebook','width=100,height=300'); return false;"
+                       class=" btn-floating btn-fb  waves-effect waves-light"><i class="fa fa-facebook"></i></a>
+                </li>
+                <li class="Utility" data-toggle="tooltip" data-placement="right" title="Chia sẻ qua g+">
+                    <a href="#" onclick="window.open('https://plus.google.com/share?url=https://caohieu.com/','Chia sẻ lên G+', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=600,width=400');return false;"
+                       class="  btn-floating btn-gplus  waves-effect waves-light"><i class="fa fa-google-plus"></i></a>
+                </li>
+                <li id="CollapseUtility" data-toggle="tooltip" data-placement="right" title="Thu gọn">
+                    <a class="btn-floating btn-default  waves-effect waves-light"><i class="fa fa-angle-left"></i></a>
+                </li>
+            </ul>
+
+
+
             <div class="col-md-12">
                 <!--Featured image-->
                 <div class="card card-cascade wider reverse">
@@ -232,7 +235,7 @@
                 <div class="tab-content">
                     <!--Panel 1-->
                     <div class="tab-pane fade in show active" id="panel5" role="tabpanel">
-                        <div class="fb-comments" data-href="http://localhost:49775" data-colorscheme="light" data-numposts="5" data-width="auto"></div>
+                        <div class="fb-comments" data-href="@Request.Url.ToString()" data-colorscheme="light" data-numposts="5" data-width="auto"></div>
                     </div>
                     <!--/.Panel 1-->
                     <!--Panel 2-->
@@ -242,7 +245,7 @@
 
                             <!--Grid row-->
                             <div class="row">
-                                <div class="col-lg-12">
+                                <div class="col-lg-12" id="RelyTo-0">
 
                                     <!--First row-->
                                     <div class="row">
@@ -251,7 +254,7 @@
                                         <div class="col-md-4">
                                             <div class="md-form form-sm">
                                                 <i class="fa fa-user prefix"></i>
-                                                <input type="text" id="form41" class="form-control">
+                                                <input type="text" id="form41" class="form-control" name="Name">
                                                 <label for="form41" class="">Tên của bạn</label>
                                             </div>
                                         </div>
@@ -260,7 +263,7 @@
                                         <div class="col-md-4">
                                             <div class="md-form form-sm">
                                                 <i class="fa fa-envelope prefix"></i>
-                                                <input type="text" id="form51" class="form-control">
+                                                <input type="text" id="form51" class="form-control" name="Email">
                                                 <label for="form51" class="">Email</label>
                                             </div>
                                         </div>
@@ -269,7 +272,7 @@
                                         <div class="col-md-4">
                                             <div class="md-form form-sm">
                                                 <i class="fa fa-edge prefix"></i>
-                                                <input type="text" id="form61" class="form-control">
+                                                <input type="text" id="form61" class="form-control" name="Web">
                                                 <label for="form61" class="">Website </label>
                                             </div>
                                         </div>
@@ -283,13 +286,13 @@
 
                                             <div class="md-form form-sm form-inline">
                                                 <i class="fa fa-pencil prefix"></i>
-                                                <textarea type="text" id="form76" class="md-textarea" length="200"></textarea>
+                                                <textarea type="text" id="form76" class="md-textarea" length="200" name="Content"></textarea>
                                                 <label for="form76">Nội dung</label>
                                             </div>
 
                                         </div>
-                                        <div class="col-md-4">
-                                            <button type="button" class="btn btn-outline-success btn-rounded">Bình luận</button>
+                                        <div class="col-md-4 AriaRely">
+                                            <button type="button" class="btn btn-outline-success btn-rounded SubmitRely" data-relyid="0" data-level="0">Bình luận</button>
 
                                         </div>
                                     </div>
@@ -299,7 +302,7 @@
 
                                 </div>
                                 <!--Grid column-->
-                                <div class="col-lg-12" style="font-weight:bolder">
+                                <div class="col-lg-12 pl-0" style="font-weight:bolder">
 
                                     <!--Newsfeed-->
                                     <div class="mdb-feed">
@@ -317,7 +320,7 @@
                                                     </div>
 
                                                     <!--Excert-->
-                                                    <div class="excerpt mb-0">
+                                                    <div class="excerpt mb-0 AriaRely">
 
                                                         <!--Brief-->
                                                         <div class="brief">
@@ -335,61 +338,61 @@
 
                                                     </div>
                                                 </div>
-                                                <div id="Rely-@c.ID" class="RelyView" style="display:none">
-                                                    <div class="col-lg-12 card mb-2 pt-3">
+                                                @*<div id="RelyTo-@c.ID" class="RelyView" style="display:none">
+                                                        <div class="col-lg-12 card mb-2 pt-3">
 
-                                                        <!--First row-->
-                                                        <div class="row">
+                                                            <!--First row-->
+                                                            <div class="row">
 
-                                                            <!--First column-->
-                                                            <div class="col-md-4">
-                                                                <div class="md-form form-sm">
-                                                                    <i class="fa fa-user prefix"></i>
-                                                                    <input type="text" id="RelyName-@c.ID" class="form-control">
-                                                                    <label for="RelyName-@c.ID" class="">Tên của bạn</label>
+                                                                <!--First column-->
+                                                                <div class="col-md-4">
+                                                                    <div class="md-form form-sm">
+                                                                        <i class="fa fa-user prefix"></i>
+                                                                        <input type="text" id="RelyName-@c.ID" class="form-control" name="Name">
+                                                                        <label for="RelyName-@c.ID" class="">Tên của bạn</label>
+                                                                    </div>
+                                                                </div>
+                                                                <!--Second column-->
+                                                                <div class="col-md-4">
+                                                                    <div class="md-form form-sm">
+                                                                        <i class="fa fa-envelope prefix"></i>
+                                                                        <input type="text" id="RelyEmail-@c.ID" class="form-control" name="Email">
+                                                                        <label for="RelyEmail-@c.ID" class="">Email</label>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!--Third column-->
+                                                                <div class="col-md-4">
+                                                                    <div class="md-form form-sm">
+                                                                        <i class="fa fa-edge prefix"></i>
+                                                                        <input type="text" id="RelyWeb-@c.ID" class="form-control" name="Web">
+                                                                        <label for="RelyWeb-@c.ID" class="">Website </label>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                            <!--/.First row-->
+                                                            <!--Second row-->
+                                                            <div class="row">
+                                                                <!--First column-->
+                                                                <div class="col-md-8">
+
+                                                                    <div class="md-form form-sm form-inline">
+                                                                        <i class="fa fa-pencil prefix"></i>
+                                                                        <textarea type="text" id="RelyContent-@c.ID" class="md-textarea" length="200" name="Content"></textarea>
+                                                                        <label for="RelyContent-@c.ID">Nội dung</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <button type="button" data-relyid="@c.ID" data-level="1" class="SubmitRely btn btn-outline-success btn-rounded">Bình luận</button>
                                                                 </div>
                                                             </div>
-                                                            <!--Second column-->
-                                                            <div class="col-md-4">
-                                                                <div class="md-form form-sm">
-                                                                    <i class="fa fa-envelope prefix"></i>
-                                                                    <input type="text" id="RelyEmail-@c.ID" class="form-control">
-                                                                    <label for="RelyEmail-@c.ID" class="">Email</label>
-                                                                </div>
-                                                            </div>
+                                                            <!--/.Second row-->
+                                                            <!--Third row-->
 
-                                                            <!--Third column-->
-                                                            <div class="col-md-4">
-                                                                <div class="md-form form-sm">
-                                                                    <i class="fa fa-edge prefix"></i>
-                                                                    <input type="text" id="RelyWeb-@c.ID" class="form-control">
-                                                                    <label for="RelyWeb-@c.ID" class="">Website </label>
-                                                                </div>
-                                                            </div>
 
                                                         </div>
-                                                        <!--/.First row-->
-                                                        <!--Second row-->
-                                                        <div class="row">
-                                                            <!--First column-->
-                                                            <div class="col-md-8">
-
-                                                                <div class="md-form form-sm form-inline">
-                                                                    <i class="fa fa-pencil prefix"></i>
-                                                                    <textarea type="text" id="RelyContent-@c.ID" class="md-textarea" length="200"></textarea>
-                                                                    <label for="RelyContent-@c.ID">Nội dung</label>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <button type="button" data-relyid="@c.ID" data-level="1" class="SubmitRely btn btn-outline-success btn-rounded">Bình luận</button>
-                                                            </div>
-                                                        </div>
-                                                        <!--/.Second row-->
-                                                        <!--Third row-->
-
-
-                                                    </div>
-                                                </div>
+                                                    </div>*@
                                                 <div id="RelyView-@c.ID">
                                                     @{
                                                         ((BlogCoupon.Controllers.HomeController)this.ViewContext.Controller).GetCommentChild(c.ID, c.PostID.Value);
@@ -405,7 +408,7 @@
                                                                 </div>
 
                                                                 <!--Excert-->
-                                                                <div class="excerpt mb-0">
+                                                                <div class="excerpt mb-0 AriaRely">
 
                                                                     <!--Brief-->
                                                                     <div class="brief">
@@ -415,63 +418,67 @@
                                                                     <!--Added text-->
                                                                     <div class="added-text">@commentChild.Content</div>
                                                                     <a class="text-left text-primary text-sm-left RelyButton" data-id="@commentChild.ID" data-level="2">trả lời <i class="fa fa-reply"></i></a>
-                                                                    
-                                                                </div>
-
-                                                            </div>
-                                                            <div id="RelyChild-@commentChild.ID" class="RelyView" style="display:none">
-                                                                <div class="col-lg-12 card mb-2 pt-3">
-                                                                    <!--First row-->
-                                                                    <div class="row">
-                                                                        <!--First column-->
-                                                                        <div class="col-md-4">
-                                                                            <div class="md-form form-sm">
-                                                                                <i class="fa fa-user prefix"></i>
-                                                                                <input type="text" id="RelyChildName-@commentChild.ID" class="form-control">
-                                                                                <label for="RelyChildName-@commentChild.ID" class="">Tên của bạn</label>
-                                                                            </div>
-                                                                        </div>
-                                                                        <!--Second column-->
-                                                                        <div class="col-md-4">
-                                                                            <div class="md-form form-sm">
-                                                                                <i class="fa fa-envelope prefix"></i>
-                                                                                <input type="text" id="RelyEmail-@c.ID" class="form-control">
-                                                                                <label for="RelyChildEmail-@commentChild.ID" class="">Email</label>
-                                                                            </div>
-                                                                        </div>
-
-                                                                        <!--Third column-->
-                                                                        <div class="col-md-4">
-                                                                            <div class="md-form form-sm">
-                                                                                <i class="fa fa-edge prefix"></i>
-                                                                                <input type="text" id="RelyChildWeb-@commentChild.ID" class="form-control">
-                                                                                <label for="RelyChildWeb-@commentChild.ID" class="">Website </label>
-                                                                            </div>
-                                                                        </div>
-
-                                                                    </div>
-                                                                    <!--/.First row-->
-                                                                    <!--Second row-->
-                                                                    <div class="row">
-                                                                        <!--First column-->
-                                                                        <div class="col-md-8">
-
-                                                                            <div class="md-form form-sm form-inline">
-                                                                                <i class="fa fa-pencil prefix"></i>
-                                                                                <textarea type="text" id="RelyChildContent-@commentChild.ID" class="md-textarea" length="200"></textarea>
-                                                                                <label for="RelyChildContent-@commentChild.ID">Nội dung</label>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-4">
-                                                                            <button type="button" data-relyid="@commentChild.ID" data-level="2" class="SubmitRely btn btn-outline-success btn-rounded">Bình luận</button>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!--/.Second row-->
-                                                                    <!--Third row-->
-
 
                                                                 </div>
+                                                                
                                                             </div>
+                                                            if (((BlogCoupon.Controllers.HomeController)this.ViewContext.Controller).CheckCommentChild(commentChild.ID, Model.ID) == 1)
+                                                            {
+                                                                <a id="LoadCommentFor-@commentChild.ID" class="text-primary text-sm-left LoadMoreComment" data-id="@commentChild.ID" data-level="3">Xem thêm</a>
+                                                            }
+                                                            @*<div id="RelyChild-@commentChild.ID" class="RelyView" style="display:none">
+                                                                    <div class="col-lg-12 card mb-2 pt-3">
+                                                                        <!--First row-->
+                                                                        <div class="row">
+                                                                            <!--First column-->
+                                                                            <div class="col-md-4">
+                                                                                <div class="md-form form-sm">
+                                                                                    <i class="fa fa-user prefix"></i>
+                                                                                    <input type="text" id="RelyChildName-@commentChild.ID" class="form-control">
+                                                                                    <label for="RelyChildName-@commentChild.ID" class="">Tên của bạn</label>
+                                                                                </div>
+                                                                            </div>
+                                                                            <!--Second column-->
+                                                                            <div class="col-md-4">
+                                                                                <div class="md-form form-sm">
+                                                                                    <i class="fa fa-envelope prefix"></i>
+                                                                                    <input type="text" id="RelyEmail-@c.ID" class="form-control">
+                                                                                    <label for="RelyChildEmail-@commentChild.ID" class="">Email</label>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <!--Third column-->
+                                                                            <div class="col-md-4">
+                                                                                <div class="md-form form-sm">
+                                                                                    <i class="fa fa-edge prefix"></i>
+                                                                                    <input type="text" id="RelyChildWeb-@commentChild.ID" class="form-control">
+                                                                                    <label for="RelyChildWeb-@commentChild.ID" class="">Website </label>
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </div>
+                                                                        <!--/.First row-->
+                                                                        <!--Second row-->
+                                                                        <div class="row">
+                                                                            <!--First column-->
+                                                                            <div class="col-md-8">
+
+                                                                                <div class="md-form form-sm form-inline">
+                                                                                    <i class="fa fa-pencil prefix"></i>
+                                                                                    <textarea type="text" id="RelyChildContent-@commentChild.ID" class="md-textarea" length="200"></textarea>
+                                                                                    <label for="RelyChildContent-@commentChild.ID">Nội dung</label>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-4">
+                                                                                <button type="button" data-relyid="@commentChild.ID" data-level="2" class="SubmitRely btn btn-outline-success btn-rounded">Bình luận</button>
+                                                                            </div>
+                                                                        </div>
+                                                                        <!--/.Second row-->
+                                                                        <!--Third row-->
+
+
+                                                                    </div>
+                                                                </div>*@
                                                         }
                                                     }
                                                 </div>
@@ -506,12 +513,12 @@
             </div>
         </div>
     </section>
-<!--Section: Blog v.4-->
-}
-else
-{
-<h5 class="text-danger py-5 px-5">Trang không tồn tại.</h5>
- }
+    <!--Section: Blog v.4-->
+                                                        }
+                                                        else
+                                                        {
+                                                            <h5 class="text-danger py-5 px-5">Trang không tồn tại.</h5>
+                                                        }
 
 
 @section js{
@@ -573,85 +580,244 @@ else
                 }
             });
         });
+        toastr.options = {
+            "closeButton": true, // true/false
+            "debug": true, // true/false
+            "newestOnTop": true, // true/false
+            "progressBar": true, // true/false
+            "positionClass": "toast-top-right", // toast-top-right / toast-top-left / toast-bottom-right / toast-bottom-left
+            "preventDuplicates": true, //true/false
+            "onclick": null,
+            "showDuration": "300", // in milliseconds
+            "hideDuration": "1000", // in milliseconds
+            "timeOut": "5000", // in milliseconds
+            "extendedTimeOut": "5000", // in milliseconds
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+
         $("#btnComment").click(function () {
             $('html, body').animate({
-                scrollTop: $("#ViewComment").offset().top
+                scrollTop: $("#ViewComment").offset().top,
             }, 200);
         });
-        $(".RelyButton").on('click', function () {
-            var id = $(this).data("id");
-            var level = parseInt( $(this).data('level'));
-            if (level == 1) {
-                if ($('#Rely-' + id).css('display') == 'none') {
-                    $('.RelyView').css('display', 'none');
-                    $('#Rely-' + id).css("display", "block");
-                } else {
-                    $('.RelyView').css('display', 'none');
-                    //$('#Rely-' + id).css("display", "none");
-                }
-            }
-            if (level == 2) {
-                if ($('#RelyChild-' + id).css('display') == 'none') {
-                    $('.RelyView').css('display', 'none');
-                    $('#RelyChild-' + id).css("display", "block");
-                } else {
-                    $('.RelyView').css('display', 'none');
-                    //$('#Rely-' + id).css("display", "none");
-                }
-            }
-            
-        });
-        $('.SubmitRely').on('click', function () {
-            alert('click submit');
-            var relyid = $(this).data('relyid');
-            var level = parseInt($(this).data('level')) +1;
+        $('.mdb-feed').on('click','.LoadMoreComment', function () {
+            var id = $(this).data('id');
+            var level = parseInt($(this).data('level'));
+            var levelnext = level + 1;
+            var urlget="/Home/GetMoreComment?id=" + id + "&postid=" +@Model.ID;
+            $.ajax({
 
-            var name = $('#RelyName-' + relyid).val();
-            var email = $('#RelyEmail-' + relyid).val();
-            var web = $('#RelyWeb-' + relyid).val();
-            var content = $('#RelyContent-' + relyid).val();
+                url: urlget,
+                async: false,
+                
+                success: function (data) {
+                   // console.log(data);
+                    for (var i = 0; i < data.length; i++) {
+                        var date = new Date(parseInt(data[i].CDate.replace("/Date(", "").replace(")/", "")));
+                        //var t2 = new Date(parseInt(a.DayStart.replace("/Date(", "").replace(")/", "")));
+                        var html1 = '';
+                        if (levelnext > 5) {
+                            var pl = levelnext - 5;
+                            html1 = '<div class="news ml-5 pl-' +pl  + '">';
+                        } else {
+                            
+                            html1 = '<div class="news ml-' + levelnext + '">';
+                        }
+
+                        
+                        
+                     
+                        html1 += '<div class="label">'
+                            + '<img src="/MDB-Free/img/default_user.png" class="rounded-circle">'
+                            + '</div>'
+                            + '<div class="excerpt mb-0 AriaRely">'
+                            + '<div class="brief">'
+                            + '<a class="name">' + data[i].Name + '</a><div class="date"><i class="fa fa-clock-o"></i>&nbsp;' + date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' vào lúc ' + date.getHours() + ':' + date.getMinutes() + '</div >'
+                            + '</div>'
+                            + '<div class="added-text">' + data[i].Content + '</div>'
+                            + '<a class="text-left text-primary text-sm-left RelyButton" data-id="' + data[i].ID + '" data-level="' + level + '">trả lời <i class="fa fa-reply"></i></a>'
+                            + '</div>'
+                            + '</div>';
+                            
+                        var check = 0;
+                        var urlcheck="/Home/CheckCommentChild?id=" + data[i].ID + "&post=" + @Model.ID;
+                            $.ajax({
+                                async: false,
+                                url: urlcheck,
+                                type:"get",
+
+                                success: function (r) {
+                                   // console.log(r);
+                                    check = r;
+                                   
+                                },
+                                error: function () {
+                                    toastr["error"]("Có lỗi xảy ra.Vui lòng hãy thử lại!");
+
+                                }
+                        });
+                            if (check > 0) {
+                              //  alert(check);
+                            html1 = html1 + '<a id="LoadCommentFor-' + data[i].ID + '" class="text-primary text-sm-left LoadMoreComment" data-id="' + data[i].ID + '" data-level="' + levelnext + '">Xem thêm</a>';
+
+                            }
+                        $('#LoadCommentFor-' + id).after(html1);
+                    }
+                    $('#LoadCommentFor-' + id).css('display','none');
+                },
+                error: function () {
+                    toastr["error"]("Có lỗi xảy ra. Vui lòng thử lại!");
+                }
+            });
+        });
+        function CheckCommentChild(id, post) {
+            
+
+        }
+        $(".mdb-feed").on('click','.RelyButton', function () {
+
+            var id = parseInt( $(this).data("id"));
+            var level = parseInt($(this).data("level"));
+            var show = parseInt( $('#RelyTo-' + id).data('show'));
+            if (show == 1) {
+                if ($('#RelyTo-' + id).is(':visible') == 1) {
+                    $('#RelyTo-' + id).css('display','none');
+                    //return;
+                } else {
+                    $('#RelyTo-' + id).css('display', 'block');
+                    //if ($('.RelyView').hasClass('#RelyTo-' + id)) {
+                    //    $('#RelyTo-' + id).css('display', 'block');
+                    //    return;
+                    //}
+                }
+                return;
+            }
+
+            var html = '<div id="RelyTo-' + id + '" class="RelyView" data-show="1">'
+                + '<div class="col-lg-12 card mb-2 pt-3">'
+                + '<div class="row">'
+                + '<div class="col-md-4">'
+                + '<div class="md-form form-sm">'
+                + '<i class="fa fa-user prefix"></i>'
+                + '<input type="text" id="RelyName-' + id + '" class="form-control" name="Name">'
+                + '<label for="RelyName-' + id + '" class="">Tên của bạn</label>'
+                + '</div>'
+                + '</div>'
+                + '<div class="col-md-4">'
+                + '<div class="md-form form-sm">'
+                + '<i class="fa fa-envelope prefix"></i>'
+                + '<input type="text" id="RelyEmail-' + id + '" class="form-control" name="Email">'
+                + '<label for="RelyEmail-' + id + '" class="">Email</label>'
+                + '</div>'
+                + '</div>'
+                + '<div class="col-md-4">'
+                + '<div class="md-form form-sm">'
+                + '<i class="fa fa-edge prefix"></i>'
+                + '<input type="text" id="RelyWeb-' + id + '" class="form-control" name="Web">'
+                + '<label for="RelyWeb-' + id + '" class="">Website </label>'
+                + '</div>'
+                + '</div>'
+                + '</div>'
+                + '<div class="row">'
+                + '<div class="col-md-8">'
+                + '<div class="md-form form-sm form-inline">'
+                + '<i class="fa fa-pencil prefix"></i>'
+                + '<textarea type="text" id="RelyContent-' + id + '" class="md-textarea" length="200" name="Content"></textarea>'
+                + '<label for="RelyContent-' + id + '">Nội dung</label>'
+                + '</div>'
+                + '</div>'
+                + '<div class="col-md-4">'
+                + '<button type="button" data-relyid="' + id + '" data-level="' + level + '" class="SubmitRely btn btn-outline-success btn-rounded">Bình luận</button>'
+                + '</div>'
+                + '</div>'
+                + '</div>'
+                + '</div>';
+            $(this).after(html);
+
+
+            //var level = parseInt( $(this).data('level'));
+            //if (level == 1) {
+            //    if ($('#RelyTo-' + id).css('display') == 'none') {
+            //        $('.RelyView').css('display', 'none');
+            //        $('#RelyTo-' + id).css("display", "block");
+            //    } else {
+            //        $('.RelyView').css('display', 'none');
+            //        //$('#Rely-' + id).css("display", "none");
+            //    }
+            //}
+            //if (level == 2) {
+            //    if ($('#RelyChild-' + id).css('display') == 'none') {
+            //        $('.RelyView').css('display', 'none');
+            //        $('#RelyChild-' + id).css("display", "block");
+            //    } else {
+            //        $('.RelyView').css('display', 'none');
+            //        //$('#Rely-' + id).css("display", "none");
+            //    }
+            //}
+
+        });
+
+        $('.mdb-feed').on('click', '.SubmitRely', function () {
+            //alert('click submit');
+            var relyid = $(this).data('relyid');
+            var level = parseInt($(this).data('level')) + 1;
+            var div = "#RelyTo-" + relyid;
+            var name = $(div).find('input[name="Name"]').val();// $('#RelyName-' + relyid).val();
+            var email = $(div).find('input[name="Email"]').val();// $('#RelyEmail-' + relyid).val();
+            var web = $(div).find('input[name="Web"]').val(); //$('#RelyWeb-' + relyid).val();
+            var content = $(div).find('textarea[name="Content"]').val();// $('#RelyContent-' + relyid).val();
             var postid =@Model.ID;
             if ($.trim(name).length == 0) {
-                alert("Vui lòng nhập họ tên của bạn!");
-                return;
+            toastr["error"]("Vui lòng nhập họ tên của bạn!");
+
+        //alert("Vui lòng nhập họ tên của bạn!");
+        return;
             }
             if ($.trim(email).length == 0) {
-                alert("Vui lòng nhập Email của bạn!");
-                return;
+            toastr["error"]("Vui lòng nhập Email của bạn!");
+        //alert("Vui lòng nhập Email của bạn!");
+        return;
             }
             if ($.trim(content).length == 0) {
-                alert("Vui lòng nhập nội dung bình luận!");
-                return;
+            toastr["error"]("Vui lòng nhập nội dung bình luận!");
+        //alert("Vui lòng nhập nội dung bình luận!");
+        return;
             }
             $.ajax({
-                url: "/Home/ProcessComment",
-                data: { postid: postid, relyto: relyid, level: level, name: name, email: email, web: web, content: content },
+            url: "/Home/ProcessComment",
+                data: {postid: postid, relyto: relyid, level: level, name: name, email: email, web: web, content: content },
                 type: "POST",
                 timeout: 30 * 1000,
                 success: function (data) {
                     if (data == "1") {
-                    alert("Bình luận của bạn sẽ hiển thị sau khi được duyệt.");
+            toastr["success"]("Bình luận của bạn sẽ hiển thị sau khi được duyệt.");
+        //alert("Bình luận của bạn sẽ hiển thị sau khi được duyệt.");
+        } else {
+            toastr["error"](data);
+        //alert(data);
 
-                    } else {
-                        alert(data);
-                    }
+        }
                 },
                 error: function () {
-                    alert("Có lỗi xảy ra vui lòng load lại trang.");
-                }
+            //alert("Có lỗi xảy ra vui lòng load lại trang.");
+            toastr["success"]("Có lỗi xảy ra vui lòng load lại trang.");
+        }
             })
         });
         $('#CollapseUtility').on('click', function () {
             if ($('.Utility').css('display') == 'none') {
-                $('.Utility').css('display', 'block');
-                $('.Utility').addClass(' animated slideInLeft');
+            $('.Utility').css('display', 'block');
+        $('.Utility').addClass(' animated slideInLeft');
                 //$('.Utility').removeClass('animated slideOutLeft');
-                 
+
             } else {
-                $('.Utility').removeClass(' animated slideInLeft');
+            $('.Utility').removeClass(' animated slideInLeft');
                 //$('.Utility').addClass(' animated slideOutLeft');
                 $('.Utility').css('display', 'none');
-                
+
                 //$('.Utility').removeClass('animated slideInLeft');
             }
         });

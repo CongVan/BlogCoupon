@@ -23,6 +23,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -1601,6 +1602,10 @@
     <Content Include="MDB-Free\css\mdb.css" />
     <Content Include="MDB-Free\css\mdb.min.css" />
     <Content Include="MDB-Free\css\style.css" />
+    <Content Include="MDB-Free\font-awesome-4.7.0\css\font-awesome.css" />
+    <Content Include="MDB-Free\font-awesome-4.7.0\css\font-awesome.min.css" />
+    <Content Include="MDB-Free\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
+    <Content Include="MDB-Free\font-awesome-4.7.0\HELP-US-OUT.txt" />
     <Content Include="MDB-Free\font\fa\fontawesome-webfont.svg" />
     <Content Include="MDB-Free\font\glyphicons\glyphicons-halflings-regular.svg" />
     <Content Include="MDB-Free\img\default_user.png" />
@@ -1836,6 +1841,39 @@
     <Content Include="MDB-Free\font\glyphicons\glyphicons-halflings-regular.woff" />
     <Content Include="MDB-Free\font\glyphicons\glyphicons-halflings-regular.woff2" />
     <Content Include="Views\Home\Partner.cshtml" />
+    <Content Include="MDB-Free\font-awesome-4.7.0\fonts\fontawesome-webfont.eot" />
+    <Content Include="MDB-Free\font-awesome-4.7.0\fonts\fontawesome-webfont.ttf" />
+    <Content Include="MDB-Free\font-awesome-4.7.0\fonts\fontawesome-webfont.woff" />
+    <Content Include="MDB-Free\font-awesome-4.7.0\fonts\fontawesome-webfont.woff2" />
+    <Content Include="MDB-Free\font-awesome-4.7.0\fonts\FontAwesome.otf" />
+    <Content Include="MDB-Free\font-awesome-4.7.0\less\animated.less" />
+    <Content Include="MDB-Free\font-awesome-4.7.0\less\bordered-pulled.less" />
+    <Content Include="MDB-Free\font-awesome-4.7.0\less\core.less" />
+    <Content Include="MDB-Free\font-awesome-4.7.0\less\fixed-width.less" />
+    <Content Include="MDB-Free\font-awesome-4.7.0\less\font-awesome.less" />
+    <Content Include="MDB-Free\font-awesome-4.7.0\less\icons.less" />
+    <Content Include="MDB-Free\font-awesome-4.7.0\less\larger.less" />
+    <Content Include="MDB-Free\font-awesome-4.7.0\less\list.less" />
+    <Content Include="MDB-Free\font-awesome-4.7.0\less\mixins.less" />
+    <Content Include="MDB-Free\font-awesome-4.7.0\less\path.less" />
+    <Content Include="MDB-Free\font-awesome-4.7.0\less\rotated-flipped.less" />
+    <Content Include="MDB-Free\font-awesome-4.7.0\less\screen-reader.less" />
+    <Content Include="MDB-Free\font-awesome-4.7.0\less\stacked.less" />
+    <Content Include="MDB-Free\font-awesome-4.7.0\less\variables.less" />
+    <Content Include="MDB-Free\font-awesome-4.7.0\scss\font-awesome.scss" />
+    <Content Include="MDB-Free\font-awesome-4.7.0\scss\_animated.scss" />
+    <Content Include="MDB-Free\font-awesome-4.7.0\scss\_bordered-pulled.scss" />
+    <Content Include="MDB-Free\font-awesome-4.7.0\scss\_core.scss" />
+    <Content Include="MDB-Free\font-awesome-4.7.0\scss\_fixed-width.scss" />
+    <Content Include="MDB-Free\font-awesome-4.7.0\scss\_icons.scss" />
+    <Content Include="MDB-Free\font-awesome-4.7.0\scss\_larger.scss" />
+    <Content Include="MDB-Free\font-awesome-4.7.0\scss\_list.scss" />
+    <Content Include="MDB-Free\font-awesome-4.7.0\scss\_mixins.scss" />
+    <Content Include="MDB-Free\font-awesome-4.7.0\scss\_path.scss" />
+    <Content Include="MDB-Free\font-awesome-4.7.0\scss\_rotated-flipped.scss" />
+    <Content Include="MDB-Free\font-awesome-4.7.0\scss\_screen-reader.scss" />
+    <Content Include="MDB-Free\font-awesome-4.7.0\scss\_stacked.scss" />
+    <Content Include="MDB-Free\font-awesome-4.7.0\scss\_variables.scss" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -12891,9 +12891,9 @@ button.toast-close-button {
         background-position: 15px center;
         background-repeat: no-repeat;
         color: #fff;
-        opacity: .8;
-        -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80);
-        filter: alpha(opacity=80)
+        opacity: 1;
+        -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+        filter: alpha(opacity=100)
     }
 
     #toast-container > :hover {

@@ -15,7 +15,7 @@ namespace BlogCoupon.Controllers
             using (var ctx = new BlogCouponEntities())
             {
                 var posthost = ctx.Posts.Where(c => c.Flag == 1).OrderByDescending(c => c.CreateDate).ToList();
-            
+
                 return View(posthost);
             }
         }
@@ -60,9 +60,9 @@ namespace BlogCoupon.Controllers
                 var postnew = ctx.Posts.Where(c => c.Flag == 1).OrderByDescending(c => c.CreateDate).Take(6).ToList();
                 return PartialView(postnew);
             }
-              
 
-           
+
+
         }
         public ActionResult RenderPage(string slug)
         {
@@ -82,11 +82,11 @@ namespace BlogCoupon.Controllers
                 ViewBag.Comments = Comments;
                 return View(post);
             }
-                
+
         }
-        public void GetCommentChild(int commentID,int postID)
+        public void GetCommentChild(int commentID, int postID)
         {
-            using(var ctx=new BlogCouponEntities())
+            using (var ctx = new BlogCouponEntities())
             {
                 var commentChild = ctx.Comments.Where(c => c.CommentTo == commentID && c.PostID == postID).ToList();
                 Session["CommentChild"] = commentChild;
@@ -94,7 +94,7 @@ namespace BlogCoupon.Controllers
         }
         public ActionResult CateSlugPage(string slug)
         {
-            using(var ctx=new BlogCouponEntities())
+            using (var ctx = new BlogCouponEntities())
             {
                 var cate = ctx.Categories.Where(c => c.Slug == slug).FirstOrDefault();
                 if (cate == null)
@@ -119,9 +119,9 @@ namespace BlogCoupon.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult ProcessComment(string postid, string relyto,string level, string name, string email, string web, string content)
+        public ActionResult ProcessComment(string postid, string relyto, string level, string name, string email, string web, string content)
         {
-            using(var ctx=new BlogCouponEntities())
+            using (var ctx = new BlogCouponEntities())
             {
                 var comment = new Comment();
                 comment.CDate = DateTime.Now;
@@ -131,6 +131,7 @@ namespace BlogCoupon.Controllers
                 comment.PostID = int.Parse(postid);
                 comment.Web = web;
                 comment.Content = content;
+                comment.Flag = 0;
                 try
                 {
                     ctx.Comments.Add(comment);
@@ -143,7 +144,27 @@ namespace BlogCoupon.Controllers
                 }
 
             }
-            
+
+        }
+        public int CheckCommentChild(int? id,int post)
+        {
+            if (id.HasValue == false)
+            {
+                return 0;
+            }
+            using (var ctx = new BlogCouponEntities())
+            {
+                var comment = ctx.Comments.Where(c => c.CommentTo == id.Value && c.PostID==post).ToList();
+                return comment.Count;
+            }
+        }
+        public ActionResult GetMoreComment(int id,int postid)
+        {
+            using (var ctx = new BlogCouponEntities())
+            {
+                var comment = ctx.Comments.Where(c => c.CommentTo == id && c.PostID == postid).ToList();
+                return Json(comment, JsonRequestBehavior.AllowGet); 
+            }
         }
     }
 }
