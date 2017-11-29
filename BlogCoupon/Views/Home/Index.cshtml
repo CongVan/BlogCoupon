@@ -97,3 +97,24 @@
 
 
 
+@section js{
+    <script>
+        $.ajax({
+            type: "get",
+            dataType:"json",
+            headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin":"*", "Authorization": "Token 4rIpCCX60Y1PMM_LLlXhVOUqCpmqRCfe" },        
+            url:"https://api.accesstrade.vn/v1/transactions?since=2016-08-01T00:00:00Z&until=2016-08-02T00:00:00Z",
+            contentType: "application/json",
+            //crossDomain: true,
+            success: function (data) {
+                console.log(data);
+            },
+            error: function (jqXHR, textStatus, ex) {
+               // console.log(status);
+                alert(textStatus + "," + ex + "," + jqXHR.responseText);
+
+            }
+        });
+
+    </script>    
+}
